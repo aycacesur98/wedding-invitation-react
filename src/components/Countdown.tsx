@@ -3,13 +3,13 @@ import { useCountdown } from '../hooks/useCountdown';
 import { Section } from './Section';
 
 const TimeUnit = ({ value, label }: { value: number; label: string }) => (
-  <div className="flex flex-col items-center mx-2 md:mx-4">
-    <div className="w-16 h-16 md:w-20 md:h-20 bg-white shadow-sm rounded-lg flex items-center justify-center border border-primary/10 mb-2">
-      <span className="font-serif text-2xl md:text-3xl text-primary font-medium">
-        {value.toString().padStart(2, '0')}
-      </span>
-    </div>
-    <span className="font-sans text-xs uppercase tracking-wider text-text/70">{label}</span>
+  <div className="flex flex-col items-center justify-center p-4 border border-white/30 rounded-lg md:aspect-square">
+    <span className="font-serif text-4xl md:text-5xl text-white font-normal mb-1">
+      {value.toString().padStart(2, '0')}
+    </span>
+    <span className="font-sans text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/80">
+      {label}
+    </span>
   </div>
 );
 
@@ -19,10 +19,14 @@ export const Countdown: React.FC = () => {
   const { days, hours, minutes, seconds } = useCountdown(targetDate);
 
   return (
-    <Section className="text-center my-8">
-      <div className="bg-white/50 rounded-3xl p-8 mx-4 md:mx-0 shadow-sm border border-white/40">
-        <h2 className="font-script text-4xl text-text mb-8">Para el gran día</h2>
-        <div className="flex justify-center flex-wrap gap-y-4">
+    <Section className="text-center my-8 bg-[#78866B] rounded-xl shadow-lg">
+      <div className="mx-4 md:mx-0">
+        <h2 className="font-script text-5xl md:text-6xl text-white mb-3">Cuenta atrás</h2>
+        <p className="font-serif text-white/90 text-lg md:text-xl mb-12">
+          Para el día más especial de nuestras vidas
+        </p>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-3xl mx-auto">
           <TimeUnit value={days} label="Días" />
           <TimeUnit value={hours} label="Horas" />
           <TimeUnit value={minutes} label="Minutos" />

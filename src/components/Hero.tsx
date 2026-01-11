@@ -25,9 +25,9 @@ export const Hero: React.FC = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.8, duration: 0.8 }}
-          className="font-serif text-5xl md:text-7xl tracking-widest text-text mb-4"
+          className="font-serif text-4xl md:text-7xl tracking-widest text-text mb-4"
         >
-          JUAN <span className="text-accent">&</span> KARLA
+          Karla <span className="text-accent">&</span> Juan
         </motion.h1>
 
         <motion.div 
@@ -52,7 +52,7 @@ export const Hero: React.FC = () => {
           transition={{ delay: 1.4 }}
           className="font-serif text-2xl md:text-3xl mt-6 text-text"
         >
-          Viernes 28 de Marzo de 2026
+          Sabado 28 de Marzo de 2026
         </motion.p>
       </div>
     </Section>
