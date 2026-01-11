@@ -22,7 +22,7 @@ export const DressCode: React.FC = () => {
         <div className="bg-white p-4 rounded-lg border border-primary/20 shadow-sm hover:shadow-md transition-shadow">
             <div className="h-64 mb-4 overflow-hidden rounded-md">
               <img 
-                src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=600" 
+                src="/dress1.jpeg" 
                 alt="Vestido largo" 
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
               />
@@ -36,7 +36,7 @@ export const DressCode: React.FC = () => {
         <div className="bg-white p-4 rounded-lg border border-primary/20 shadow-sm hover:shadow-md transition-shadow">
             <div className="h-64 mb-4 overflow-hidden rounded-md">
               <img 
-                src="/traje.jpg" 
+                src="/pan.png" 
                 alt="Traje formal con corbata negra" 
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
               />

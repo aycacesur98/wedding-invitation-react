@@ -3,34 +3,23 @@ import { MapPin, Calendar, Clock } from 'lucide-react';
 import { Section } from './Section';
 
 export const Venue: React.FC = () => {
-  const handleAddToCalendar = () => {
-    const event = {
-      title: 'Boda de Juan & Karla',
-      location: 'Hacienda de Cortés, Sevilla',
-      description: '¡Nos casamos! Esperamos contar con tu presencia.',
-      start: '20260328T153000',
-      end: '20260329T020000',
-    };
-    
-    const icsContent = `BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-SUMMARY:${event.title}
-LOCATION:${event.location}
-DESCRIPTION:${event.description}
-DTSTART:${event.start}
-DTEND:${event.end}
-END:VEVENT
-END:VCALENDAR`;
+  const event = {
+    title: 'Boda de Juan & Karla',
+    location: 'Torre del Reloj, Cartagena de Indias',
+    description: '¡Nos casamos! Esperamos contar con tu presencia.',
+    start: '20260328T153000',
+    end: '20260329T020000',
+  };
 
-    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'boda-juan-karla.ics');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const getGoogleCalendarUrl = () => {
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: event.title,
+      dates: `${event.start}/${event.end}`,
+      details: event.description,
+      location: event.location,
+    });
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
   };
 
   return (
@@ -69,13 +58,15 @@ END:VCALENDAR`;
             <MapPin size={16} />
             Cómo llegar
           </a>
-          <button 
-            onClick={handleAddToCalendar}
-            className="px-6 py-2 border border-primary text-primary font-sans text-sm rounded-full hover:bg-primary/5 transition-colors flex items-center justify-center gap-2"
+          <a 
+            href={getGoogleCalendarUrl()}
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto px-6 py-2 border border-primary text-primary font-sans text-sm rounded-full hover:bg-primary/5 transition-colors flex items-center justify-center gap-2"
           >
             <Calendar size={16} />
             Añadir al calendario
-          </button>
+          </a>
         </div>
       </div>
       
