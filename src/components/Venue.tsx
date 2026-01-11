@@ -5,7 +5,7 @@ import { Section } from './Section';
 export const Venue: React.FC = () => {
   const event = {
     title: 'Boda de Juan & Karla',
-    location: 'Torre del Reloj, Cartagena de Indias',
+    location: 'Casa Real Del Márquez, Cartagena de Indias',
     description: '¡Nos casamos! Esperamos contar con tu presencia.',
     start: '20260328T153000',
     end: '20260329T020000',
@@ -34,8 +34,9 @@ export const Venue: React.FC = () => {
           </div>
         </div>
         
-        <h3 className="font-serif text-2xl text-text mb-2">Torre del Reloj</h3>
-        <p className="font-sans text-text/70 mb-1">Cartagena de Indias</p>
+        <h3 className="font-serif text-2xl text-text mb-2">Casa Real Del Márquez</h3>
+        <p className="font-sans text-text/70 mb-1">Cra. 4a #36-08, El Centro</p>
+        <p className="font-sans text-text/70 mb-1">Cartagena de Indias, Bolívar</p>
         
         <div className="flex justify-center gap-4 my-6 text-sm text-text/80">
           <div className="flex items-center gap-1">
@@ -44,13 +45,13 @@ export const Venue: React.FC = () => {
           </div>
           <div className="flex items-center gap-1">
             <Clock size={16} className="text-accent" />
-            <span>15:30h</span>
+            <span>03:30 pm</span>
           </div>
         </div>
         
         <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
           <a 
-            href="https://maps.google.com/?q=Torre+del+Reloj,Cartagena+de+Indias" 
+            href="https://maps.app.goo.gl/cNqBoZDj2wwPe4Dc8" 
             target="_blank" 
             rel="noopener noreferrer"
             className="px-6 py-2 bg-primary text-white font-sans text-sm rounded-full hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
@@ -77,7 +78,7 @@ export const Venue: React.FC = () => {
           height="100%" 
           frameBorder="0" 
           style={{ border: 0 }} 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3924.627346746538!2d-75.54796332398692!3d10.42158496495394!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef62f98bd260659%3A0x442c75249590453d!2sTorre%20del%20Reloj!5e0!3m2!1ses!2sco!4v1710000000000!5m2!1ses!2sco"
+          src="https://maps.google.com/maps?q=Casa+Real+Del+Márquez+Cartagena&t=&z=17&ie=UTF8&iwloc=&output=embed"
           allowFullScreen
           title="Map"
         ></iframe>
