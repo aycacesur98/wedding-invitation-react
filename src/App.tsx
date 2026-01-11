@@ -5,6 +5,7 @@ import { Hero } from './components/Hero';
 import { Countdown } from './components/Countdown';
 import { Venue } from './components/Venue';
 import { Timeline } from './components/Timeline';
+import { DressCode } from './components/DressCode';
 import { Gifts } from './components/Gifts';
 import { RSVPForm } from './components/RSVPForm';
 import { Footer } from './components/Footer';
@@ -28,6 +29,7 @@ function App() {
           <Countdown />
           <Venue />
           <Timeline />
+          <DressCode />
           <Gifts />
           <RSVPForm />
           <Footer />

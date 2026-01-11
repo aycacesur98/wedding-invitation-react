@@ -16,7 +16,7 @@ export const Gifts: React.FC = () => {
   };
 
   return (
-    <Section id="gifts" className="text-center" withPattern>
+    <Section id="gifts" className="text-center">
       <div className="flex justify-center mb-4">
         <Gift className="text-primary w-8 h-8" />
       </div>
