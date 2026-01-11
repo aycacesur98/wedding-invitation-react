@@ -1,13 +1,13 @@
 import React from 'react';
 import { Section } from './Section';
-import { DoorOpen, Heart, Wine, Utensils, Users, Music, Moon } from 'lucide-react';
+import { DoorOpen, Wine, Utensils, Users, Music, Moon, Church } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Timeline: React.FC = () => {
   const events = [
-    { time: '2:00 pm', title: 'Llegada', icon: DoorOpen },
-    { time: '3:30 pm', title: 'Ceremonia', icon: Heart },
-    { time: '5:00 pm', title: 'Cóctel', icon: Wine },
+    { time: '3:30 pm', title: 'Llegada', icon: DoorOpen },
+    { time: '4:00 pm', title: 'Ceremonia', icon: Church },
+    { time: '6:00 pm', title: 'Cóctel', icon: Wine },
     { time: '7:00 pm', title: 'Cena', icon: Utensils },
     { time: '9:00 pm', title: 'Primer baile', icon: Users },
     { time: '10:00 pm', title: 'Fiesta', icon: Music },

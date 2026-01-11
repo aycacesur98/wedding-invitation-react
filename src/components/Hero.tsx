@@ -52,7 +52,7 @@ export const Hero: React.FC = () => {
           transition={{ delay: 1.4 }}
           className="font-serif text-2xl md:text-3xl mt-6 text-text"
         >
-          MARZO 28 VIERNES 2026
+          Viernes 28 de Marzo de 2026
         </motion.p>
       </div>
     </Section>
