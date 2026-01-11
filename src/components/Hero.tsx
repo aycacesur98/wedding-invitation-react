@@ -27,7 +27,7 @@ export const Hero: React.FC = () => {
           transition={{ delay: 0.8, duration: 0.8 }}
           className="font-serif text-4xl md:text-7xl tracking-widest text-text mb-4"
         >
-          Juan <span className="text-accent">&</span> Karla
+          Karla <span className="text-accent">&</span> Juan
         </motion.h1>
 
         <motion.div 
