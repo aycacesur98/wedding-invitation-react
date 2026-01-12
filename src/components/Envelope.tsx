@@ -58,7 +58,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                   transition={{ delay: 0.5, duration: 1 }}
                   className="absolute inset-x-2 top-2 bottom-2 bg-white shadow-sm p-6 flex flex-col items-center justify-center text-center z-[5]"
                 >
-                   <h1 className="font-serif text-3xl text-primary mb-2">Juan & Karla</h1>
+                   <h1 className="font-serif text-3xl text-primary mb-2">Karla & Juan</h1>
                    <p className="font-script text-xl text-text">Save the Date</p>
                    <p className="font-sans text-xs mt-4 text-text/60">28 . 03 . 2026</p>
                 </motion.div>

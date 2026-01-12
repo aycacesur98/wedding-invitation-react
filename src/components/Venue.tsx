@@ -4,7 +4,7 @@ import { Section } from './Section';
 
 export const Venue: React.FC = () => {
   const event = {
-    title: 'Boda de Juan & Karla',
+    title: 'Boda de Karla & Juan',
     location: 'Casa Real Del Márquez, Cartagena de Indias',
     description: '¡Nos casamos! Esperamos contar con tu presencia.',
     start: '20260328T153000',
