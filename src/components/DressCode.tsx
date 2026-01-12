@@ -11,7 +11,7 @@ export const DressCode: React.FC = () => {
         <Shirt className="text-primary w-8 h-8" />
       </div>
       
-      <h2 className="font-script text-4xl text-primary mb-2 relative z-10">Dress Code</h2>
+      <h2 className="font-script text-4xl text-text mb-2 relative z-10">Dress Code</h2>
       <p className="font-sans text-text/60 mb-8 uppercase tracking-widest text-xs relative z-10">Código de Vestimenta</p>
       
       {/* Decorative "Formal" text background */}
@@ -28,7 +28,7 @@ export const DressCode: React.FC = () => {
         {/* Ellos - Left Column */}
         <div className="order-2 md:order-1 text-center md:text-right space-y-6">
             <div>
-                <h3 className="font-serif text-2xl text-primary mb-4">Ellos</h3>
+                <h3 className="font-serif text-2xl text-text mb-4">Ellos</h3>
                 <ul className="font-sans text-text/80 space-y-3">
                     <li className="font-semibold tracking-wide uppercase">Traje Formal</li>
                     <li className="text-sm text-text/60">NO BEIGE</li>
@@ -52,11 +52,12 @@ export const DressCode: React.FC = () => {
         {/* Ellas - Right Column */}
         <div className="order-3 text-center md:text-left space-y-6">
             <div>
-                <h3 className="font-serif text-2xl text-primary mb-4">Ellas</h3>
+                <h3 className="font-serif text-2xl text-text mb-4">Ellas</h3>
                 <ul className="font-sans text-text/80 space-y-3">
                     <li className="font-semibold tracking-wide uppercase">Vestido Largo</li>
+                    <li className="text-sm">Tonos claros y luminosos</li>
                     <li className="text-xs uppercase leading-relaxed max-w-[200px] mx-auto md:mx-0 text-text/60">
-                        No Blanco, Beige, Crema, Plateado, Rosado, Dorado
+                        Favor evitar azul oscuro y negro
                     </li>
                     <li className="uppercase text-sm">Tacones abiertos o cerrados</li>
                 </ul>

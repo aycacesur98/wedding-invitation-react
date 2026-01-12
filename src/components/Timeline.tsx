@@ -16,7 +16,7 @@ export const Timeline: React.FC = () => {
 
   return (
     <Section id="timeline" className="text-center max-w-6xl mx-auto">
-      <h2 className="font-script text-4xl text-primary mb-2">Programación del día</h2>
+      <h2 className="font-script text-4xl text-text mb-2">Programación del día</h2>
       <p className="font-sans text-text/60 mb-12 uppercase tracking-widest text-xs">Momentos especiales del gran día</p>
       
       <div className="relative mt-12">
@@ -39,7 +39,7 @@ export const Timeline: React.FC = () => {
               >
                 {/* Time Badge - Top on Desktop */}
                 <div className="mb-2 md:mb-6 bg-white/80 md:bg-secondary px-3 py-1 rounded-full border border-primary/20 shadow-sm md:shadow-none md:border-transparent">
-                   <span className="font-serif text-lg md:text-xl text-primary font-bold">{event.time}</span>
+                   <span className="font-serif text-lg md:text-xl text-text font-bold">{event.time}</span>
                 </div>
                 
                 {/* Icon Circle */}

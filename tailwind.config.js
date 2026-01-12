@@ -6,10 +6,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#D4A5A5", // Dusty rose
-        secondary: "#F5F1ED", // Cream
-        text: "#6B5B5B", // Warm gray
-        accent: "#C9A982", // Gold
+        primary: "#87CEEB", // Azul Cielo Clásico
+        secondary: "#F9F9F6", // Blanco Marfil
+        tertiary: "#A7C7E7", // Azul Pastel
+        text: "#2E4053", // Dark Blue Gray for contrast
+        accent: "#D4AF37", // Dorado Suave
       },
       fontFamily: {
         serif: ['"Cormorant Garamond"', "serif"],
