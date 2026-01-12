@@ -48,7 +48,7 @@ export const RSVPForm: React.FC = () => {
           <div className="flex justify-center mb-4">
             <CheckCircle className="w-16 h-16 text-green-500" />
           </div>
-          <h2 className="font-serif text-3xl text-primary mb-4">¡Gracias!</h2>
+          <h2 className="font-serif text-3xl text-text mb-4">¡Gracias!</h2>
           <p className="font-sans text-text mb-6">
             Tu confirmación ha sido recibida correctamente.
           </p>
@@ -66,7 +66,7 @@ export const RSVPForm: React.FC = () => {
   return (
     <Section id="rsvp" className="max-w-2xl" withPattern>
       <div className="text-center mb-10">
-        <h2 className="font-script text-4xl text-primary mb-2">Confirma tu asistencia</h2>
+        <h2 className="font-script text-4xl text-text mb-2">Confirma tu asistencia</h2>
         <p className="font-sans text-text/60 uppercase tracking-widest text-xs">Esperamos tu confirmación, ¡gracias!</p>
       </div>
 

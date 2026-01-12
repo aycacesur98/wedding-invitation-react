@@ -10,7 +10,7 @@ export const Gifts: React.FC = () => {
         <Gift className="text-primary w-8 h-8" />
       </div>
       
-      <h2 className="font-script text-4xl text-primary mb-2">Regalos</h2>
+      <h2 className="font-script text-4xl text-text mb-2">Regalos</h2>
       <p className="font-sans text-text/60 mb-8 uppercase tracking-widest text-xs">Lo más importante es que estén presentes</p>
       
       <motion.div 
@@ -28,7 +28,7 @@ export const Gifts: React.FC = () => {
             </div>
         </div>
         
-        <h3 className="font-serif text-2xl text-primary mb-4">Lluvia de Sobres</h3>
+        <h3 className="font-serif text-2xl text-text mb-4">Lluvia de Sobres</h3>
         
         <p className="font-sans text-text/80 leading-relaxed text-lg">
           Su presencia es nuestro mayor regalo.

@@ -24,7 +24,7 @@ export const Venue: React.FC = () => {
 
   return (
     <Section id="venue" className="text-center" withPattern>
-      <h2 className="font-script text-4xl text-primary mb-2">El lugar</h2>
+      <h2 className="font-script text-4xl text-text mb-2">El lugar</h2>
       <p className="font-sans text-text/60 mb-8 uppercase tracking-widest text-xs">Dónde celebrar este momento especial</p>
       
       <div className="bg-white p-8 rounded-lg shadow-md max-w-md mx-auto border border-primary/20">

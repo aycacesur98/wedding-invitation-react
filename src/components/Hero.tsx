@@ -49,7 +49,7 @@ export const Hero: React.FC = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.8, duration: 0.8 }}
-            className="font-serif text-5xl md:text-7xl tracking-widest text-white mb-4 drop-shadow-lg"
+            className="font-serif text-4xl md:text-7xl tracking-widest text-white mb-4 drop-shadow-lg"
           >
             Karla <span className="text-white/80">&</span> Juan
           </motion.h1>
