@@ -74,52 +74,52 @@ export const Venue: React.FC = () => {
       <h2 className="font-script text-4xl text-text mb-2">El lugar</h2>
       <p className="font-sans text-text/60 mb-8 uppercase tracking-widest text-xs">Dónde celebrar este momento especial</p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <div className="grid grid-cols-2 gap-3 md:gap-8 max-w-5xl mx-auto">
         {events.map((event, index) => (
-          <div key={index} className="bg-white p-8 rounded-lg shadow-md border border-primary/20 flex flex-col h-full">
+          <div key={index} className="bg-white p-3 md:p-8 rounded-lg shadow-md border border-primary/20 flex flex-col h-full">
             <div className="flex justify-center mb-4">
-              <div className="bg-secondary p-4 rounded-full">
+              <div className="bg-secondary p-3 md:p-4 rounded-full">
                 {event.icon}
               </div>
             </div>
             
-            <h3 className="font-serif text-2xl text-text mb-2">{event.title}</h3>
+            <h3 className="font-serif text-lg md:text-2xl text-text mb-2">{event.title}</h3>
             
             <div className="mb-4">
-              <p className="font-semibold text-text/90">{event.location}</p>
-              <p className="font-sans text-text/70 text-sm">{event.address}</p>
-              <p className="font-sans text-text/70 text-sm">{event.city}</p>
+              <p className="font-semibold text-text/90 text-sm md:text-base">{event.location}</p>
+              <p className="font-sans text-text/70 text-xs md:text-sm hidden md:block">{event.address}</p>
+              <p className="font-sans text-text/70 text-xs md:text-sm hidden md:block">{event.city}</p>
             </div>
             
-            <div className="flex justify-center gap-4 my-4 text-sm text-text/80">
-              <div className="flex items-center gap-1">
-                <Calendar size={16} className="text-accent" />
+            <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-4 my-4 text-xs md:text-sm text-text/80">
+              <div className="flex items-center justify-center gap-1">
+                <Calendar size={14} className="text-accent md:w-4 md:h-4" />
                 <span>{event.date}</span>
               </div>
-              <div className="flex items-center gap-1">
-                <Clock size={16} className="text-accent" />
+              <div className="flex items-center justify-center gap-1">
+                <Clock size={14} className="text-accent md:w-4 md:h-4" />
                 <span>{event.time}</span>
               </div>
             </div>
             
-            <div className="flex flex-col gap-3 mt-auto">
+            <div className="flex flex-col gap-2 md:gap-3 mt-auto">
               <a 
                 href={event.googleMapsUrl}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="w-full px-6 py-2 bg-primary text-white font-sans text-sm rounded-full hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
+                className="w-full px-3 md:px-6 py-2 bg-primary text-white font-sans text-xs md:text-sm rounded-full hover:bg-primary/90 transition-colors flex items-center justify-center gap-1 md:gap-2"
               >
-                <MapPin size={16} />
-                Cómo llegar
+                <MapPin size={14} className="md:w-4 md:h-4" />
+                <span>Cómo llegar</span>
               </a>
               <a 
                 href={getGoogleCalendarUrl(event.calendarEvent)}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="w-full px-6 py-2 border border-primary text-primary font-sans text-sm rounded-full hover:bg-primary/5 transition-colors flex items-center justify-center gap-2"
+                className="w-full px-3 md:px-6 py-2 border border-primary text-primary font-sans text-xs md:text-sm rounded-full hover:bg-primary/5 transition-colors flex items-center justify-center gap-1 md:gap-2"
               >
-                <Calendar size={16} />
-                Añadir al calendario
+                <Calendar size={14} className="md:w-4 md:h-4" />
+                <span>Agendar</span>
               </a>
             </div>
           </div>
