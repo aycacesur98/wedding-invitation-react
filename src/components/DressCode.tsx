@@ -30,10 +30,9 @@ export const DressCode: React.FC = () => {
             <div>
                 <h3 className="font-serif text-2xl text-text mb-4">Ellos</h3>
                 <ul className="font-sans text-text/80 space-y-3">
-                    <li className="font-semibold tracking-wide uppercase">Traje Formal</li>
-                    <li className="text-sm text-text/60">NO BEIGE</li>
-                    <li className="uppercase text-sm">Corbata o Corbatín</li>
-                    <li className="uppercase text-sm">Zapatos</li>
+                    <li className="font-semibold tracking-wide uppercase">Traje formal de lino</li>
+                    <li className="text-sm">Camisa clara</li>
+                    <li className="uppercase text-sm">Zapatos elegantes</li>
                 </ul>
             </div>
         </div>
@@ -42,7 +41,7 @@ export const DressCode: React.FC = () => {
         <div className="order-1 md:order-2 flex justify-center">
             <div className="relative w-full max-w-[300px] md:max-w-full aspect-[3/4] md:aspect-auto">
               <img 
-                src="/dresscodeall.webp" 
+                src="/dresscode.jpeg" 
                 alt="Código de vestimenta formal para pareja" 
                 className="w-full h-auto rounded-xl object-contain max-h-[500px]"
               />
@@ -55,11 +54,7 @@ export const DressCode: React.FC = () => {
                 <h3 className="font-serif text-2xl text-text mb-4">Ellas</h3>
                 <ul className="font-sans text-text/80 space-y-3">
                     <li className="font-semibold tracking-wide uppercase">Vestido Largo</li>
-                    <li className="text-sm">Tonos claros y luminosos</li>
-                    <li className="text-xs uppercase leading-relaxed max-w-[200px] mx-auto md:mx-0 text-text/60">
-                        Favor evitar azul oscuro y negro
-                    </li>
-                    <li className="uppercase text-sm">Tacones abiertos o cerrados</li>
+                    <li className="uppercase text-sm">Tacones abiertos o Cerrados.</li>
                 </ul>
             </div>
         </div>
@@ -71,13 +66,12 @@ export const DressCode: React.FC = () => {
         transition={{ delay: 0.4 }}
         className="mt-12 relative z-10"
       >
-        <p className="font-serif text-text/80 italic text-xl mb-4">
-            "Etiqueta Rigurosa"
+        <h3 className="font-sans text-lg text-text mb-4">Colores reservados:</h3>
+        <p className="font-sans text-text/80 mb-8 max-w-xl mx-auto leading-relaxed">
+            Blanco, negro, azul oscuro, dorado y azul cielo.
         </p>
-        <p className="font-sans text-sm text-text/60 max-w-xl mx-auto leading-relaxed">
-            En nuestra boda, los trajes y vestidos largos son el dresscode principal. 
-            <br />
-            ¡Prepárate para brillar!
+        <p className="font-serif text-text/80 italic text-xl">
+            "Etiqueta rigurosa"
         </p>
       </motion.div>
     </Section>
