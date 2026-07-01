@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'react-hook-form'; // Framer motion kütüphanesini bozmadan koruduk
-import { motion as motionFramer, AnimatePresence as AnimatePresenceFramer } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface EnvelopeProps {
   onOpen: () => void;
@@ -29,20 +28,20 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
   };
 
   return (
-    <AnimatePresenceFramer>
+    <AnimatePresence>
       {isVisible && (
-        <motionFramer
+        <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8 }}
-          // Eski arka plan rengini silip yerine sizin yüklediğiniz floral_bg.png dosyasını esnek arka plan yaptık
+          // Yeni çiçekli arka plan görseliniz buraya esnek şekilde entegre edildi
           className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 select-none bg-no-repeat bg-center bg-cover"
           style={{ backgroundImage: 'url(/floral_bg.png)' }}
         >
           {/* 3D Perspektif Alanı */}
           <div className="relative w-full max-w-md h-64 mx-4 perspective-2000 flex flex-col items-center">
             
-            <motionFramer 
+            <motion.div 
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.6 }}
@@ -61,13 +60,13 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
               </div>
 
               {/* 2. DAVETİYE MEKTUBU */}
-              <motionFramer
+              <motion.div
                 initial={{ y: 0, zIndex: 2 }}
                 animate={isFlapOpen ? { y: -130, scale: 1.02 } : { y: 0, zIndex: 2 }}
                 transition={{ delay: 0.5, duration: 1.2, ease: "easeInOut" }}
                 className="absolute inset-x-4 top-3 bottom-3 bg-white shadow-lg p-6 flex flex-col items-center justify-center text-center rounded-md border border-neutral-100"
               >
-                {/* Eğer linkte isim varsa çok asil bir şekilde mektubun en üstünde görünecek */}
+                {/* Linkte isim varsa mektubun en üstünde zarifçe görünür */}
                 {misafirIsmi && (
                   <p className="font-sans text-[11px] text-amber-800/80 uppercase tracking-[0.2em] mb-2">
                     Sn. {misafirIsmi}
@@ -76,7 +75,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 <h1 className="font-serif text-3xl text-neutral-800 mb-1 tracking-wide">Ayça & Çağkan</h1>
                 <p className="font-script text-lg text-amber-800 my-1">Düğün Davetiyesi</p>
                 <p className="font-sans text-xs mt-4 tracking-widest text-neutral-500">22 . 08 . 2026</p>
-              </motionFramer>
+              </motion.div>
 
               {/* 3. İÇ İÇE GEÇEN ALT VE YAN KAPAKLAR */}
               <div className="absolute inset-0 z-10 pointer-events-none">
@@ -88,7 +87,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
               </div>
 
               {/* 4. ANİMASYONLU ÜST KAPAK */}
-              <motionFramer
+              <motion.div
                 initial={{ rotateX: 0 }}
                 animate={isFlapOpen ? { rotateX: 160 } : { rotateX: 0 }}
                 transition={{ duration: 1.2, ease: "easeInOut" }}
@@ -102,10 +101,10 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 <svg className="w-full h-full drop-shadow-[0_4px_4px_rgba(0,0,0,0.1)]" viewBox="0 0 100 100" preserveAspectRatio="none">
                   <path d="M-1,-1 L101,-1 L50,102 Z" fill="#EAEAE6" />
                 </svg>
-              </motionFramer>
+              </motion.div>
 
               {/* 5. PREMIUM MÜHÜR */}
-              <motionFramer
+              <motion.div
                 initial={{ rotateX: 0 }}
                 animate={isFlapOpen ? { rotateX: 160, y: -90, scale: 0.8, opacity: 0 } : { rotateX: 0, y: 0 }}
                 transition={{ duration: 1.2, ease: "easeInOut" }}
@@ -121,22 +120,22 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                   alt="Düğün Mührü" 
                   className="w-full h-full object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.35)] active:scale-95 transition-transform duration-100"
                 />
-              </motionFramer>
+              </motion.div>
 
-            </motionFramer>
+            </motion.div>
 
             {/* 6. ZARFIN ALTINDAKİ ŞIK BİLGİLENDİRME YAZISI */}
-            <motionFramer
+            <motion.p
               animate={isFlapOpen ? { opacity: 0, y: 10 } : { opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
               className="absolute bottom-[-60px] font-serif text-sm text-neutral-600 tracking-wider text-center bg-white/60 px-4 py-1.5 rounded-full backdrop-blur-sm shadow-sm"
             >
               Açmak için lütfen zarfa tıklayınız
-            </motionFramer>
+            </motion.p>
 
           </div>
-        </motionFramer>
+        </motion.div>
       )}
-    </AnimatePresenceFramer>
+    </AnimatePresence>
   );
 };
