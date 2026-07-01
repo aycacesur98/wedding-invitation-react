@@ -42,7 +42,7 @@ export const RSVPForm: React.FC = () => {
     }
   };
 
-  // YENİ: SADELEŞTİRİLMİŞ, TERTEMİZ BAŞARI EKRANI
+  // SADELEŞTİRİLMİŞ, TERTEMİZ BAŞARI EKRANI (Excel yazısı ve tekrar doldurma butonu yok)
   if (submitStatus === 'success') {
     return (
       <Section id="rsvp" className="text-center py-24">
@@ -62,8 +62,9 @@ export const RSVPForm: React.FC = () => {
     <Section id="rsvp" className="max-w-2xl" withPattern>
       <div className="text-center mb-10">
         <h2 className="font-script text-4xl text-text mb-2">Katılım Durumu</h2>
-        <p className="font-sans text-text/60 uppercase tracking-widest text-xs">
-          8 Ağustos 2026 TARİHİNE kadar gerİ dönüş yapmanızı rİca ederİz, teşekkürler!
+        {/* uppercase CSS kodu silindi, Türkçe karakter uyumu için manuel yazıldı */}
+        <p className="font-sans text-text/60 tracking-widest text-[11px] md:text-xs">
+          8 AĞUSTOS 2026 TARİHİNE KADAR GERİ DÖNÜŞ YAPMANIZI RİCA EDERİZ, TEŞEKKÜRLER!
         </p>
       </div>
 
@@ -81,6 +82,25 @@ export const RSVPForm: React.FC = () => {
           {errors.nombre_completo && <span className="text-red-500 text-xs font-sans">{(errors.nombre_completo as any).message}</span>}
         </div>
 
+        {/* YENİ EKLENEN: Cep Telefonu Alanı */}
+        <div className="space-y-1">
+          <label className="block font-serif text-lg text-text">Cep Telefonu *</label>
+          <input
+            {...register('telefon', { 
+              required: 'Telefon numarası zorunludur',
+              pattern: {
+                value: /^\+?[0-9\s-]{10,}$/,
+                message: "Lütfen geçerli bir telefon numarası giriniz (Ör: +90...)"
+              }
+            })}
+            type="tel"
+            defaultValue="+"
+            className="w-full px-4 py-2 border border-primary/20 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-secondary/30 font-sans"
+            placeholder="+90 5XX XXX XX XX"
+          />
+          {errors.telefon && <span className="text-red-500 text-xs font-sans">{(errors.telefon as any).message}</span>}
+        </div>
+
         {/* E-posta */}
         <div className="space-y-1">
           <label className="block font-serif text-lg text-text">E-posta</label>
@@ -93,7 +113,7 @@ export const RSVPForm: React.FC = () => {
             })}
             type="email"
             className="w-full px-4 py-2 border border-primary/20 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-secondary/30"
-            placeholder="Detayları gönderebilmemiz için"
+            placeholder="Detayları gönderebilmemiz için (İsteğe bağlı)"
           />
           {errors.email && <span className="text-red-500 text-xs font-sans">{(errors.email as any).message}</span>}
         </div>
