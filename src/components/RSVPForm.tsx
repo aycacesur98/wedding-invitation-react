@@ -4,7 +4,7 @@ import { Section } from './Section';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Google Spreadsheet Web App URL'niz başarıyla entegre edildi
+// Google Spreadsheet Web App URL'niz - KESİNLİKLE DOKUNULMADI
 const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyodfi6tYdNPlAj6cwByJXWPDmdJ0wPZgR0-P5ZzQ7YTVDneCVxN5c9SAkYW2TxJZcOGA/exec';
 
 export const RSVPForm: React.FC = () => {
@@ -12,7 +12,6 @@ export const RSVPForm: React.FC = () => {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Projedeki katı tiplere takılmamak için form yapısını esnek (any) hale getirdik
   const { register, handleSubmit, watch, formState: { errors } } = useForm<any>();
   
   const asistiraValue = watch('asistira');
@@ -43,27 +42,17 @@ export const RSVPForm: React.FC = () => {
     }
   };
 
+  // YENİ: SADELEŞTİRİLMİŞ, TERTEMİZ BAŞARI EKRANI
   if (submitStatus === 'success') {
     return (
-      <Section id="rsvp" className="text-center py-20">
+      <Section id="rsvp" className="text-center py-24">
         <motion.div 
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="bg-white p-8 rounded-lg shadow-lg border border-primary/20 max-w-md mx-auto"
+          className="bg-white p-10 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-primary/10 max-w-sm mx-auto flex flex-col items-center"
         >
-          <div className="flex justify-center mb-4">
-            <CheckCircle className="w-16 h-16 text-green-500" />
-          </div>
-          <h2 className="font-serif text-3xl text-text mb-4">Teşekkürler!</h2>
-          <p className="font-sans text-text mb-6">
-            Katılım durumunuz başarıyla Excel tablomuza kaydedildi.
-          </p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="text-primary underline font-sans text-sm hover:text-primary/80"
-          >
-            Başka bir yanıt gönder
-          </button>
+          <CheckCircle className="w-20 h-20 text-[#4C6444] mb-6 opacity-90" />
+          <h2 className="font-script text-5xl text-text tracking-wide">Teşekkürler!</h2>
         </motion.div>
       </Section>
     );
