@@ -75,26 +75,27 @@ export const Hero: React.FC = () => {
             className="h-px w-20 md:w-24 bg-white/80 mx-auto my-6" 
           />
 
+          {/* DÜZELTİLDİ: "Düğünümüze" ile tamamen aynı font (font-script) yapıldı ve uppercase kaldırıldı. */}
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2.6 }}
-            className="font-sans uppercase tracking-[0.2em] text-xs md:text-lg text-white/90 drop-shadow-md"
+            className="font-script text-3xl md:text-5xl text-white drop-shadow-md mb-2"
           >
-            Davetlisiniz!
+            Davetlisiniz
           </motion.p>
           
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2.8 }}
-            className="font-serif text-2xl md:text-4xl mt-5 text-white drop-shadow-md"
+            className="font-serif text-2xl md:text-4xl mt-3 text-white drop-shadow-md"
           >
              22 Ağustos 2026
           </motion.p>
         </motion.div>
 
-        {/* BUTON: Kutusu kaldırıldı, sadece BOLD yazı ve ok kaldı */}
+        {/* BUTON: uppercase tag'i silindi, doğru Türkçe karakterlerle el ile yazıldı. */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -105,8 +106,8 @@ export const Hero: React.FC = () => {
             onClick={scrollToRSVP}
             className="group flex flex-col items-center gap-2 text-white hover:text-white/80 transition-colors drop-shadow-xl cursor-pointer"
           >
-            <span className="font-sans uppercase tracking-[0.2em] text-[11px] md:text-sm font-bold drop-shadow-lg">
-              Katılımınızı Onaylayın
+            <span className="font-sans tracking-[0.2em] text-[11px] md:text-sm font-bold drop-shadow-lg">
+              KATILIMINIZI ONAYLAYIN
             </span>
             <ChevronDown className="animate-bounce w-7 h-7 md:w-8 md:h-8 opacity-90 drop-shadow-md mt-1" />
           </button>
