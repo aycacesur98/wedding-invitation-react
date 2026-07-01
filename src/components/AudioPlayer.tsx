@@ -7,40 +7,46 @@ export const AudioPlayer: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    // Attempt auto-play on mount
     const playAudio = async () => {
       if (audioRef.current) {
         try {
           audioRef.current.volume = 0.5;
           await audioRef.current.play();
           setIsPlaying(true);
-        } catch {
-          console.log("Autoplay blocked, waiting for user interaction");
-          setIsPlaying(false);
-          
-          // Fallback: Play on first interaction
-          const handleInteraction = async () => {
+        } catch (e) {
+          console.log("Tarayıcı otomatik çalmayı bekletiyor:", e);
+          // Tarayıcı ekstra tıklama isterse devreye girecek yedek sistem
+          const forcePlay = async () => {
             if (audioRef.current) {
               try {
                 await audioRef.current.play();
                 setIsPlaying(true);
-                // Remove listeners once played
-                document.removeEventListener('click', handleInteraction);
-                document.removeEventListener('touchstart', handleInteraction);
-                document.removeEventListener('keydown', handleInteraction);
-              } catch (e) {
-                console.error("Autoplay failed even after interaction", e);
-              }
+                document.removeEventListener('click', forcePlay);
+                document.removeEventListener('touchstart', forcePlay);
+              } catch (err) {}
             }
           };
-
-          document.addEventListener('click', handleInteraction);
-          document.addEventListener('touchstart', handleInteraction);
-          document.addEventListener('keydown', handleInteraction);
+          document.addEventListener('click', forcePlay);
+          document.addEventListener('touchstart', forcePlay);
         }
       }
     };
-    playAudio();
+
+    // AKILLI ZARF BEKLEME SİSTEMİ
+    // Eskiden burada direkt playAudio() vardı ve site açılır açılmaz çalıyordu.
+    // Şimdi zarfın ekrandan tamamen kaybolmasını bekliyoruz.
+    const checkEnvelopeInterval = setInterval(() => {
+      // Zarfın kodundaki özel "perspective-2000" sınıfını ekranda arıyoruz
+      const isEnvelopeStillHere = document.querySelector('.perspective-2000');
+      
+      if (!isEnvelopeStillHere) {
+        // Zarf ekrandan silindi! (Yani zarf açıldı ve ana sayfa geldi)
+        clearInterval(checkEnvelopeInterval); // Aramayı durdur
+        playAudio(); // Müziği tam bu saniyede başlat!
+      }
+    }, 500);
+
+    return () => clearInterval(checkEnvelopeInterval);
   }, []);
 
   const togglePlay = () => {
@@ -71,14 +77,14 @@ export const AudioPlayer: React.FC = () => {
       <button
         onClick={togglePlay}
         className="p-2 hover:bg-primary/10 rounded-full transition-colors text-primary"
-        aria-label={isPlaying ? "Pause music" : "Play music"}
+        aria-label={isPlaying ? "Müziği Durdur" : "Müziği Başlat"}
       >
         {isPlaying ? <Pause size={20} /> : <Play size={20} />}
       </button>
       <button
         onClick={toggleMute}
         className="p-2 hover:bg-primary/10 rounded-full transition-colors text-primary"
-        aria-label={isMuted ? "Unmute" : "Mute"}
+        aria-label={isMuted ? "Sesi Aç" : "Sesi Kapat"}
       >
         {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
       </button>
