@@ -51,7 +51,7 @@ export const Hero: React.FC = () => {
             transition={{ delay: 0.8, duration: 0.8 }}
             className="font-serif text-4xl md:text-7xl tracking-widest text-white mb-4 drop-shadow-lg"
           >
-            Karla <span className="text-white/80">&</span> Juan
+            Ayça <span className="text-white/80">&</span> Çağkan
           </motion.h1>
 
           <motion.div 
@@ -67,7 +67,7 @@ export const Hero: React.FC = () => {
             transition={{ delay: 1.2 }}
             className="font-sans uppercase tracking-[0.2em] text-sm md:text-lg text-white/90 drop-shadow-md"
           >
-            ¡Nos casamos!
+            Davetlisiniz!
           </motion.p>
           
           <motion.p 
@@ -76,7 +76,7 @@ export const Hero: React.FC = () => {
             transition={{ delay: 1.4 }}
             className="font-serif text-2xl md:text-4xl mt-6 text-white drop-shadow-md"
           >
-            Sábado 28 de Marzo de 2026
+             22 Ağustos 2026
           </motion.p>
         </div>
 
@@ -92,7 +92,7 @@ export const Hero: React.FC = () => {
             className="group flex flex-col items-center gap-2 text-white hover:text-white/80 transition-colors"
           >
             <span className="uppercase tracking-[0.2em] text-sm md:text-base font-medium">
-              Confirma tu asistencia
+              Katılımınızı onaylayın
             </span>
             <ChevronDown className="animate-bounce w-8 h-8" />
           </button>
