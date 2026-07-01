@@ -17,6 +17,12 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
     
     setIsFlapOpen(true);
 
+    // MÜZİK İNTERAKSİYONU: Kullanıcı zarfa tıkladığı an arkadaki müziği tetikler
+    const audio = document.getElementById('bg-music') as HTMLAudioElement;
+    if (audio) {
+      audio.play().catch(err => console.log("Müzik otomatik oynatılamadı, etkileşim bekleniyor:", err));
+    }
+
     setTimeout(() => {
       setIsVisible(false);
     }, 2800);
@@ -28,8 +34,8 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
 
   return (
     <AnimatePresence>
-      {/* Şık El Yazısı Fontunu Google Fonts Üzerinden Yüklüyoruz */}
-      <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+      {/* Büyük harfleri muazzam elegant ve yatayda geniş gösteren premium font yüklemesi */}
+      <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet" />
 
       {isVisible && (
         <motion.div
@@ -89,29 +95,33 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
 
                 <div className="relative z-10 flex flex-col items-center justify-center">
                   {misafirIsmi && (
-                    <p className="font-sans text-[10px] text-stone-400 uppercase tracking-[0.25em] mb-1">
+                    <p className="font-sans text-[10px] text-stone-400 uppercase tracking-[0.25em] mb-2">
                       Sn. {misafirIsmi}
                     </p>
                   )}
                   
-                  {/* KOYU YEŞİL EL YAZISI */}
+                  {/* YENİ ULTRA ELEGANT VE KOYU YEŞİL FONT BAŞLIĞI */}
                   <h1 
-                    className="mb-1 tracking-wide"
+                    className="mb-1 tracking-wide font-normal"
                     style={{ 
-                      fontFamily: "'Great Vibes', cursive", 
-                      fontSize: '3rem', 
+                      fontFamily: "'Cinzel Decorative', serif", 
+                      fontSize: '1.85rem', 
                       color: '#1E3B2B',
-                      lineHeight: '1.2'
+                      lineHeight: '1.3',
+                      letterSpacing: '0.05em'
                     }}
                   >
                     Ayça & Çağkan
                   </h1>
                   
-                  <p className="font-serif italic text-sm text-amber-800/80 my-0.5 tracking-wider">
+                  <p 
+                    className="my-1 tracking-[0.2em] text-xs uppercase"
+                    style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', color: '#b45309' }}
+                  >
                     Düğün Davetiyesi
                   </p>
                   
-                  <p className="font-sans text-[11px] mt-2 tracking-[0.3em] text-stone-500 font-light">
+                  <p className="font-sans text-[11px] mt-3 tracking-[0.3em] text-stone-500 font-light">
                     22 . 08 . 2026
                   </p>
                 </div>
