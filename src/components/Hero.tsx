@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
 export const Hero: React.FC = () => {
+  
+  // YENİ: 3.5 Saniye Sonra Sayfayı 2 cm (80px) Aşağı Kaydıran Sihirli Efekt
+  useEffect(() => {
+    const autoScrollTimer = setTimeout(() => {
+      // Eğer kullanıcı zaten kendi başına aşağı kaydırmadıysa (en tepedeyse) çalışır
+      if (window.scrollY === 0) {
+        window.scrollBy({ top: 80, behavior: 'smooth' });
+      }
+    }, 3500); // 3.5 saniye sonra tetiklenir
+
+    return () => clearTimeout(autoScrollTimer);
+  }, []);
+
   const scrollToRSVP = () => {
     const rsvpSection = document.getElementById('rsvp');
     if (rsvpSection) {
@@ -11,8 +24,8 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    // h-[90vh] yaparak ekranın altından birkaç cm boşluk bıraktık, böylece insanlar aşağıyı görüp kaydırmak isteyecek
-    <section className="relative h-[90vh] min-h-[600px] w-full overflow-hidden flex flex-col justify-center items-center text-center">
+    // %90 yüksekliği iptal ettik, tekrar h-screen (tam ekran) yaptık
+    <section className="relative h-screen min-h-[600px] w-full overflow-hidden flex flex-col justify-center items-center text-center">
       
       {/* VINTAGE TABELA ŞEKLİNİ OLUŞTURAN GİZLİ VEKTÖR MASKESİ */}
       <svg width="0" height="0" className="absolute pointer-events-none">
@@ -58,9 +71,9 @@ export const Hero: React.FC = () => {
       </div>
 
       {/* İçerik Bölümü */}
-      <div className="relative z-20 px-4 max-w-5xl w-full flex flex-col items-center justify-center h-full pt-10">
+      <div className="relative z-20 px-4 max-w-5xl w-full flex flex-col items-center justify-center h-full pt-6">
         
-        {/* BUZLU VINTAGE CAM TABELA - Opaklık artırıldı, çok daha net ve belirgin bir buzlu cam yapıldı */}
+        {/* BUZLU VINTAGE CAM TABELA - Opaklık "kalın ve belirgin" yapıldı (bg-white/50 ve blur-xl) */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -69,14 +82,14 @@ export const Hero: React.FC = () => {
           style={{ filter: 'drop-shadow(0 20px 30px rgba(0, 0, 0, 0.35))' }}
         >
           <div 
-            className="w-full h-full backdrop-blur-md bg-white/25 flex flex-col items-center justify-center px-10 py-16 md:px-16 md:py-20"
+            className="w-full h-full backdrop-blur-xl bg-white/50 flex flex-col items-center justify-center px-10 py-16 md:px-16 md:py-20"
             style={{ clipPath: 'url(#vintage-plaque)' }}
           >
             <motion.p 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 2.0 }}
-              className="font-script text-4xl md:text-5xl text-[#F9F9F6] mb-5 md:mb-7 drop-shadow-md"
+              className="font-script text-4xl md:text-5xl text-neutral-800 mb-5 md:mb-7 drop-shadow-sm"
             >
               Save the date
             </motion.p>
@@ -85,23 +98,23 @@ export const Hero: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 2.2, duration: 0.8 }}
-              className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-widest text-white mb-3 md:mb-5 drop-shadow-lg whitespace-nowrap"
+              className="font-serif text-4xl sm:text-5xl md:text-6xl tracking-widest text-neutral-900 mb-3 md:mb-5 drop-shadow-sm whitespace-nowrap"
             >
-              Ayça <span className="text-white/60 text-3xl md:text-4xl mx-1 md:mx-3">&</span> Çağkan
+              Ayça <span className="text-neutral-700 text-3xl md:text-4xl mx-1 md:mx-3">&</span> Çağkan
             </motion.h1>
 
             <motion.div 
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ delay: 2.5, duration: 0.8 }}
-              className="h-px w-16 md:w-24 bg-white/70 mx-auto my-4 md:my-6" 
+              className="h-px w-16 md:w-24 bg-neutral-600 mx-auto my-4 md:my-6" 
             />
 
             <motion.p 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 2.7 }}
-              className="font-sans uppercase tracking-[0.25em] text-[10px] md:text-sm text-white/95 drop-shadow-md"
+              className="font-sans uppercase tracking-[0.25em] text-[10px] md:text-sm text-neutral-800 drop-shadow-sm"
             >
               Davetlisiniz!
             </motion.p>
@@ -110,7 +123,7 @@ export const Hero: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 2.9 }}
-              className="font-serif text-2xl md:text-3xl mt-3 md:mt-4 text-[#F9F9F6] drop-shadow-md tracking-wider"
+              className="font-serif text-2xl md:text-3xl mt-3 md:mt-4 text-neutral-900 drop-shadow-sm tracking-wider"
             >
                22 Ağustos 2026
             </motion.p>
@@ -126,8 +139,7 @@ export const Hero: React.FC = () => {
         >
           <button
             onClick={scrollToRSVP}
-            // Butonun arkasına yatay, ince ve şık bir buzlu cam eklendi
-            className="group flex flex-col items-center gap-1 text-white hover:text-[#D4AF37] transition-all duration-300 backdrop-blur-md bg-white/15 border border-white/30 px-8 py-2.5 rounded-2xl shadow-[0_8px_20px_rgba(0,0,0,0.15)] cursor-pointer"
+            className="group flex flex-col items-center gap-1 text-white hover:text-[#D4AF37] transition-all duration-300 backdrop-blur-md bg-white/20 border border-white/40 px-8 py-2.5 rounded-2xl shadow-[0_8px_20px_rgba(0,0,0,0.2)] cursor-pointer"
           >
             <span className="font-sans uppercase tracking-[0.2em] text-[11px] md:text-sm font-semibold drop-shadow-lg mt-0.5">
               Katılımınızı Onaylayın
