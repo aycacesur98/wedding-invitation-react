@@ -1,11 +1,10 @@
 import React from 'react';
 import { MapPin, Calendar, Clock } from 'lucide-react';
 import { Section } from './Section';
-import { motion } from 'framer-motion';
 
 export const Venue: React.FC = () => {
   // Mia464 Google Maps Navigasyon Linki
-  const googleMapsUrl = 'https://maps.app.goo.gl/3f8H7UeHpxQp3gW37'; 
+  const googleMapsUrl = 'https://maps.google.com/?q=Mia464+Polonezk%C3%B6y'; 
 
   // Google Takvim Etkinlik Bilgileri (22 Ağustos 2026 - 18:30)
   const calendarEvent = {
@@ -90,7 +89,6 @@ export const Venue: React.FC = () => {
             alt="Mia464 Polonezköy" 
             className="w-full h-full object-cover"
             onError={(e) => {
-              // Fotoğraf henüz yüklenmediyse kırık görünmesin, şık krem bir zemin dursun diye önlem
               e.currentTarget.style.display = 'none';
             }}
           />
