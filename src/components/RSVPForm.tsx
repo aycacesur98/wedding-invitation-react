@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { supabase } from '../supabase';
 import { Section } from './Section';
 import type { RsvpFormData } from '../types';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+
+// GOOGLE APPS SCRIPT'TEN ALACAĞINIZ LINKI BURAYA YAPIŞTIRACAKSINIZ
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyodfi6tYdNPlAj6cwByJXWPDmdJ0wPZgR0-P5ZzQ7YTVDneCVxN5c9SAkYW2TxJZcOGA/exec';
 
 export const RSVPForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -13,25 +15,31 @@ export const RSVPForm: React.FC = () => {
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm<RsvpFormData>();
   
+  // Seçimleri anlık takip etmek için izleyicilerimiz
   const asistiraValue = watch('asistira');
+  const hasPlusOne = watch('has_plus_one');
 
-  const onSubmit = async (data: RsvpFormData) => {
+  const onSubmit = async (data: any) => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setErrorMessage('');
 
     try {
-      const { error } = await supabase
-        .from('rsvp_responses')
-        .insert([data]);
-
-      if (error) throw error;
+      // Veriyi doğrudan Google Excel köprümüze gönderiyoruz
+      await fetch(GOOGLE_SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
       setSubmitStatus('success');
     } catch (error) {
       console.error('Error submitting RSVP:', error);
       setSubmitStatus('error');
-      setErrorMessage((error as Error).message || 'Bir hata oluştu. Lütfen tekrar deneyiniz.');
+      setErrorMessage('Bir hata oluştu. Lütfen tekrar deneyiniz.');
     } finally {
       setIsSubmitting(false);
     }
@@ -50,7 +58,7 @@ export const RSVPForm: React.FC = () => {
           </div>
           <h2 className="font-serif text-3xl text-text mb-4">Teşekkürler!</h2>
           <p className="font-sans text-text mb-6">
-            Katılım durumunuz başarıyla başarıyla kaydedildi.
+            Katılım durumunuz başarıyla Excel tablomuza kaydedildi.
           </p>
           <button 
             onClick={() => window.location.reload()}
@@ -72,7 +80,7 @@ export const RSVPForm: React.FC = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white p-6 md:p-10 rounded-lg shadow-lg border border-primary/10">
         
-        {/* Nombre */}
+        {/* Ad Soyad */}
         <div className="space-y-1">
           <label className="block font-serif text-lg text-text">Ad Soyad *</label>
           <input
@@ -84,7 +92,7 @@ export const RSVPForm: React.FC = () => {
           {errors.nombre_completo && <span className="text-red-500 text-xs font-sans">{errors.nombre_completo.message}</span>}
         </div>
 
-        {/* Email */}
+        {/* E-posta */}
         <div className="space-y-1">
           <label className="block font-serif text-lg text-text">E-posta</label>
           <input
@@ -101,7 +109,7 @@ export const RSVPForm: React.FC = () => {
           {errors.email && <span className="text-red-500 text-xs font-sans">{errors.email.message}</span>}
         </div>
 
-        {/* Asistencia */}
+        {/* Katılım Durumu */}
         <div className="space-y-2">
           <label className="block font-serif text-lg text-text">Düğünümüze katılabilecek misiniz? *</label>
           <div className="space-y-2">
@@ -109,7 +117,7 @@ export const RSVPForm: React.FC = () => {
               <input
                 {...register('asistira', { required: 'Lütfen bir seçenek belirleyin' })}
                 type="radio"
-                value="si"
+                value="Evet, katılıyorum"
                 className="text-primary focus:ring-primary h-4 w-4"
               />
               <span className="font-sans text-text">Evet, katılıyorum</span>
@@ -118,7 +126,7 @@ export const RSVPForm: React.FC = () => {
               <input
                 {...register('asistira', { required: 'Lütfen bir seçenek belirleyin' })}
                 type="radio"
-                value="no"
+                value="Hayır, katılamıyorum"
                 className="text-primary focus:ring-primary h-4 w-4"
               />
               <span className="font-sans text-text">Hayır, katılamıyorum</span>
@@ -127,7 +135,7 @@ export const RSVPForm: React.FC = () => {
               <input
                 {...register('asistira', { required: 'Lütfen bir seçenek belirleyin' })}
                 type="radio"
-                value="no_se"
+                value="Henüz bilmiyorum"
                 className="text-primary focus:ring-primary h-4 w-4"
               />
               <span className="font-sans text-text">Henüz bilmiyorum</span>
@@ -136,70 +144,60 @@ export const RSVPForm: React.FC = () => {
           {errors.asistira && <span className="text-red-500 text-xs font-sans">{errors.asistira.message}</span>}
         </div>
 
-        {/* Conditional fields if attending or maybe */}
-        {(asistiraValue === 'si' || asistiraValue === 'no_se') && (
+        {/* Şartlı Alanlar: Eğer "Evet" veya "Bilmiyorum" denirse +1 sorusu çıksın */}
+        {(asistiraValue === 'Evet, katılıyorum' || asistiraValue === 'Henüz bilmiyorum') && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             className="space-y-6 pt-4 border-t border-primary/10"
           >
-            {/* Ceremonia Checkbox */}
-            <label className="flex items-center space-x-3 cursor-pointer">
-              <input
-                {...register('ceremonia')}
-                type="checkbox"
-                className="rounded text-primary focus:ring-primary h-5 w-5"
-              />
-              <span className="font-serif text-lg text-text">Nikah seremonisinde de yanımızda olacak mısınız?</span>
-            </label>
-
-            {/* Alergias */}
+            {/* +1 Kişi Var mı Seçeneği */}
             <div className="space-y-2">
-              <label className="block font-serif text-lg text-text mb-2">Alerji veya özel beslenme tercihi</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <label className="block font-serif text-lg text-text">Yanınızda artı bir misafirimiz olacak mı?</label>
+              <div className="flex space-x-6 p-2">
                 <label className="flex items-center space-x-2 cursor-pointer">
-                  <input {...register('vegetariano')} type="checkbox" className="rounded text-primary focus:ring-primary" />
-                  <span className="font-sans text-sm text-text">Vejetaryen</span>
+                  <input {...register('has_plus_one')} type="radio" value="yes" className="text-primary focus:ring-primary" />
+                  <span className="font-sans text-text">Evet</span>
                 </label>
                 <label className="flex items-center space-x-2 cursor-pointer">
-                  <input {...register('sin_gluten')} type="checkbox" className="rounded text-primary focus:ring-primary" />
-                  <span className="font-sans text-sm text-text">Glutensiz</span>
+                  <input {...register('has_plus_one')} type="radio" value="no" className="text-primary focus:ring-primary" />
+                  <span className="font-sans text-text">Hayır</span>
                 </label>
-                <label className="flex items-center space-x-2 cursor-pointer">
-                  <input {...register('vegano')} type="checkbox" className="rounded text-primary focus:ring-primary" />
-                  <span className="font-sans text-sm text-text">Vegan</span>
-                </label>
-                <label className="flex items-center space-x-2 cursor-pointer">
-                  <input {...register('sin_lactosa')} type="checkbox" className="rounded text-primary focus:ring-primary" />
-                  <span className="font-sans text-sm text-text">Laktozsuz</span>
-                </label>
-              </div>
-              
-              <div className="mt-3">
-                <label className="block font-sans text-sm text-text mb-1">Diğer alerjiler / hassasiyetler:</label>
-                <input
-                  {...register('otras_alergias')}
-                  type="text"
-                  className="w-full px-3 py-2 border border-primary/20 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-secondary/30 text-sm"
-                  placeholder="Belirtiniz..."
-                />
               </div>
             </div>
+
+            {/* Eğer +1 seçeneğine "Evet" derlerse çıkacak Ekstra Ad Soyad alanı */}
+            {hasPlusOne === 'yes' && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                className="space-y-1 bg-secondary/10 p-4 rounded border border-primary/5"
+              >
+                <label className="block font-serif text-base text-text">Gelecek Diğer Kişinin Adı Soyadı *</label>
+                <input
+                  {...register('plus_one_name', { required: 'Lütfen eşinizin/misafirinizin adını belirtiniz' })}
+                  type="text"
+                  className="w-full px-4 py-2 border border-primary/20 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-white"
+                  placeholder="Refakatçinizin adı ve soyadı"
+                />
+                {errors.plus_one_name && <span className="text-red-500 text-xs font-sans">{errors.plus_one_name.message}</span>}
+              </motion.div>
+            )}
           </motion.div>
         )}
 
-        {/* Comentarios */}
+        {/* Dilek ve Not Kutusu */}
         <div className="space-y-1">
-          <label className="block font-serif text-lg text-text">Eklemek istediğiniz notlar</label>
+          <label className="block font-serif text-lg text-text">Bize dileklerinizi yazın</label>
           <textarea
             {...register('comentarios')}
             rows={3}
             className="w-full px-4 py-2 border border-primary/20 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-secondary/30"
-            placeholder="Bizim için bir mesajınız var mı?"
+            placeholder="Bizim için güzel bir mesaj..."
           />
         </div>
 
-        {/* Error Message */}
+        {/* Hata Mesajı alanı */}
         {submitStatus === 'error' && (
           <div className="p-3 bg-red-50 text-red-600 rounded flex items-center gap-2 text-sm">
             <AlertCircle size={16} />
@@ -207,7 +205,7 @@ export const RSVPForm: React.FC = () => {
           </div>
         )}
 
-        {/* Submit Button */}
+        {/* Gönder Butonu */}
         <button
           type="submit"
           disabled={isSubmitting}
