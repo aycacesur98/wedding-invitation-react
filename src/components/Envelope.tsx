@@ -48,15 +48,16 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
               className="relative w-full h-full shadow-[0_20px_40px_rgba(0,0,0,0.15)] rounded-lg"
             >
               
-              {/* 1. ZARF ARKA DUVARI & CREAMY PAPER DOKUSU */}
+              {/* 1. ZARF ARKA DUVARI & CREAMY PAPER DOKUSU (Bebe Mavisi Harmanlı) */}
               <div 
-                className="absolute inset-0 rounded-lg overflow-hidden bg-[#EAEAE6]"
+                className="absolute inset-0 rounded-lg overflow-hidden bg-[#D4E2EC]"
                 style={{ 
                   backgroundImage: 'url(/creamy_paper.png)',
-                  backgroundSize: 'cover'
+                  backgroundSize: 'cover',
+                  backgroundBlendMode: 'multiply' // Kağıt dokusunu bebe mavisiyle birleştirir
                 }}
               >
-                <div className="absolute inset-0 bg-black/[0.03] shadow-inner" />
+                <div className="absolute inset-0 bg-black/[0.02] shadow-inner" />
               </div>
 
               {/* 2. DAVETİYE MEKTUBU */}
@@ -77,12 +78,14 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 <p className="font-sans text-xs mt-4 tracking-widest text-neutral-500">22 . 08 . 2026</p>
               </motion.div>
 
-              {/* 3. İÇ İÇE GEÇEN ALT VE YAN KAPAKLAR */}
+              {/* 3. İÇ İÇE GEÇEN ALT VE YAN KAPAKLAR (Yumuşak Bebe Mavisi Tonları) */}
               <div className="absolute inset-0 z-10 pointer-events-none">
-                <svg className="absolute inset-0 w-full h-full drop-shadow-[0_-2px_4px_rgba(0,0,0,0.05)]" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  <path d="M0,-1 L52,50 L0,101 Z" fill="#E3DED2" />
-                  <path d="M100,-1 L48,50 L100,101 Z" fill="#E3DED2" />
-                  <path d="M-1,101 L50,45 L101,101 Z" fill="#DED9CC" />
+                <svg className="absolute inset-0 w-full h-full drop-shadow-[0_-2px_4px_rgba(0,0,0,0.06)]" viewBox="0 0 100 100" preserveAspectRatio="none">
+                  {/* Yan kapaklar biraz daha gölgeli durması için tatlı bir ton kırılması içeriyor */}
+                  <path d="M0,-1 L52,50 L0,101 Z" fill="#CBDCE7" />
+                  <path d="M100,-1 L48,50 L100,101 Z" fill="#CBDCE7" />
+                  {/* Ön alt kapak derinlik katmak için milimetrik koyulaştırıldı */}
+                  <path d="M-1,101 L50,45 L101,101 Z" fill="#C2D5E2" />
                 </svg>
               </div>
 
@@ -98,8 +101,9 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 }}
                 className="absolute top-0 inset-x-0 h-[55%] cursor-pointer"
               >
-                <svg className="w-full h-full drop-shadow-[0_4px_4px_rgba(0,0,0,0.1)]" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  <path d="M-1,-1 L101,-1 L50,102 Z" fill="#EAEAE6" />
+                <svg className="w-full h-full drop-shadow-[0_4px_5px_rgba(0,0,0,0.08)]" viewBox="0 0 100 100" preserveAspectRatio="none">
+                  {/* Zarfın ilk görünen üst kapağı şık, temiz bir bebe mavisi */}
+                  <path d="M-1,-1 L101,-1 L50,102 Z" fill="#D4E2EC" />
                 </svg>
               </motion.div>
 
@@ -118,7 +122,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 <img 
                   src="/yeni-muhur.png" 
                   alt="Düğün Mührü" 
-                  className="w-full h-full object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.35)] active:scale-95 transition-transform duration-100"
+                  className="w-full h-full object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.25)] active:scale-95 transition-transform duration-100"
                 />
               </motion.div>
 
