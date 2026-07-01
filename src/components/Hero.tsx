@@ -10,7 +10,7 @@ export const Hero: React.FC = () => {
       if (window.scrollY === 0) {
         window.scrollBy({ top: 80, behavior: 'smooth' });
       }
-    }, 3500);
+    }, 3900);
 
     return () => clearTimeout(autoScrollTimer);
   }, []);
@@ -55,7 +55,7 @@ export const Hero: React.FC = () => {
             transition={{ delay: 1.8 }}
             className="font-script text-4xl md:text-6xl text-white mb-4 md:mb-6 drop-shadow-md"
           >
-            Save the date
+            Düğünümüze
           </motion.p>
           
           <motion.h1 
