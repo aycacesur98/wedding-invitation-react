@@ -1,31 +1,28 @@
 import React from 'react';
 import { Section } from './Section';
-import { DoorOpen, Wine, Users, Music, Moon, Church } from 'lucide-react';
+import { Utensils, GlassWater, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const Timeline: React.FC = () => {
   const events = [
-    { time: '3:30 pm', title: 'Llegada de invitados', icon: DoorOpen },
-    { time: '4:00 pm', title: 'Ceremonia', icon: Church },
-    { time: '6:00 pm', title: 'Cóctel', icon: Wine },
-    { time: '7:00 pm', title: 'Primer baile', icon: Users },
-    { time: '8:00 pm', title: 'Fiesta', icon: Music },
-    { time: '2:30 am', title: 'Fin de fiesta', icon: Moon },
+    { time: '18:30', title: 'Karşılama / Kokteyl', icon: GlassWater },
+    { time: '19:30', title: 'Nikah Seremonisi', icon: Heart },
+    { time: '20:00', title: 'Yemek', icon: Utensils },
   ];
 
   return (
-    <Section id="timeline" className="text-center max-w-6xl mx-auto">
-      <h2 className="font-script text-4xl text-text mb-2">Programación del día</h2>
-      <p className="font-sans text-text/60 mb-12 uppercase tracking-widest text-xs">Momentos especiales del gran día</p>
+    <Section id="timeline" className="text-center max-w-4xl mx-auto py-12">
+      <h2 className="font-script text-4xl md:text-5xl text-text mb-2">Düğün Akışı</h2>
+      <p className="font-sans text-text/60 mb-12 uppercase tracking-widest text-xs">Büyük günün özel anları</p>
       
-      <div className="relative mt-12">
-        {/* Horizontal Line (Desktop) */}
-        <div className="hidden md:block absolute top-1/2 left-0 w-full h-px bg-primary/30 -translate-y-1/2 z-0" />
+      <div className="relative mt-12 px-4">
+        {/* Yatay Çizgi (Masaüstü Ekranlar İçin) */}
+        <div className="hidden md:block absolute top-1/2 left-10 right-10 h-px bg-primary/30 -translate-y-1/2 z-0" />
         
-        {/* Vertical Line (Mobile) */}
+        {/* Dikey Çizgi (Mobil Ekranlar İçin) */}
         <div className="md:hidden absolute left-1/2 top-0 h-full w-px bg-primary/30 -translate-x-1/2 z-0" />
 
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-4 relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-12 md:gap-4 relative z-10">
           {events.map((event, index) => {
             const Icon = event.icon;
             return (
@@ -33,21 +30,22 @@ export const Timeline: React.FC = () => {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="flex flex-col items-center w-full md:w-auto bg-secondary md:bg-transparent p-2 md:p-0 rounded-lg md:rounded-none z-10"
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 }}
+                className="flex flex-col items-center w-full md:w-1/3 bg-secondary md:bg-transparent p-4 md:p-0 rounded-xl md:rounded-none z-10"
               >
-                {/* Time Badge - Top on Desktop */}
-                <div className="mb-2 md:mb-6 bg-white/80 md:bg-secondary px-3 py-1 rounded-full border border-primary/20 shadow-sm md:shadow-none md:border-transparent">
+                {/* Saat Rozeti */}
+                <div className="mb-3 md:mb-6 bg-white md:bg-secondary px-4 py-1 rounded-full border border-primary/20 shadow-sm md:shadow-none md:border-transparent">
                    <span className="font-serif text-lg md:text-xl text-text font-bold">{event.time}</span>
                 </div>
                 
-                {/* Icon Circle */}
-                <div className="w-14 h-14 rounded-full bg-white border-2 border-primary/20 flex items-center justify-center text-primary shadow-md hover:scale-110 transition-transform duration-300 mb-2 md:mb-6">
-                  <Icon size={24} />
+                {/* İkon Yuvarlağı */}
+                <div className="w-16 h-16 rounded-full bg-white border-2 border-primary/20 flex items-center justify-center text-primary shadow-md hover:scale-110 transition-transform duration-300 mb-3 md:mb-6">
+                  <Icon size={26} />
                 </div>
                 
-                {/* Title */}
-                <span className="font-sans text-base md:text-sm font-medium text-text">{event.title}</span>
+                {/* Etkinlik Adı */}
+                <span className="font-sans text-base md:text-sm font-medium text-text tracking-wide">{event.title}</span>
               </motion.div>
             );
           })}
