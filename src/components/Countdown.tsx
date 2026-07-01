@@ -26,7 +26,7 @@ export const Countdown: React.FC = () => {
       </div>
 
       <div className="mx-4 md:mx-0 relative z-10">
-        <h2 className="font-script text-5xl md:text-6xl text-text mb-3">Count Down</h2>
+        <h2 className="font-script text-5xl md:text-6xl text-text mb-3">Geri Sayım!</h2>
         <p className="font-serif text-text/80 text-lg md:text-xl mb-12">
           Sizi aramızda görmekten mutluluk duyarız
         </p>
