@@ -29,7 +29,7 @@ export const Venue: React.FC = () => {
       city: 'Cartagena de Indias, Bolívar',
       date: '28 de marzo de 2026',
       time: '03:30 pm',
-      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Parroquia+Nuestra+Se%C3%B1ora+de+la+Candelaria+Pie+de+la+Popa+Cartagena',
+      googleMapsUrl: 'https://maps.app.goo.gl/CVhAbxRTp9ruK6UP6',
       calendarEvent: {
         title: 'Boda Karla & Juan - Ceremonia',
         description: 'Ceremonia religiosa',
