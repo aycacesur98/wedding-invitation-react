@@ -63,7 +63,7 @@ export const RSVPForm: React.FC = () => {
       <div className="text-center mb-10">
         <h2 className="font-script text-4xl text-text mb-2">Katılım Durumu</h2>
         <p className="font-sans text-text/60 uppercase tracking-widest text-xs">
-          8 Ağustos 2026 tarihine kadar geri dönüş yapmanızı rica ederiz, teşekkürler!
+          8 Ağustos 2026 TARİHİNE kadar gerİ dönüş yapmanızı rİca ederİz, teşekkürler!
         </p>
       </div>
 
