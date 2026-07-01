@@ -26,14 +26,9 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
     }, 3400);
   };
 
-  const smoothTransition = {
-    duration: 1.5,
-    ease: [0.25, 1, 0.5, 1]
-  };
-
   return (
     <AnimatePresence>
-      {/* Şık El Yazısı Fontunu Dışarıdan Doğrudan Yüklüyoruz */}
+      {/* Şık El Yazısı Fontunu Google Fonts Üzerinden Yüklüyoruz */}
       <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
 
       {isVisible && (
@@ -49,7 +44,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
             <motion.div 
               initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
+              transition={{ duration: 0.8 }}
               className="relative w-full h-full shadow-[0_20px_50px_rgba(0,0,0,0.18)] rounded-lg"
             >
               
@@ -65,25 +60,25 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 <div className="absolute inset-0 bg-black/[0.02] shadow-inner" />
               </div>
 
-              {/* 2. DAVETİYE MEKTUBU (GARANTİLİ STİL ENTEGRASYONU) */}
+              {/* 2. DAVETİYE MEKTUBU */}
               <motion.div
                 initial={{ y: 0, scale: 1, zIndex: 2 }}
                 animate={isFlapOpen ? { y: -140, scale: 1.03, zIndex: 2 } : { y: 0, scale: 1, zIndex: 2 }}
                 transition={{ 
                   delay: 0.25,
                   duration: 1.6,
-                  ease: [0.25, 1, 0.5, 1] 
+                  ease: "easeOut"
                 }}
                 className="absolute inset-x-4 top-3 bottom-3 bg-white shadow-lg p-5 flex flex-col items-center justify-center text-center rounded-md border border-neutral-100"
               >
-                {/* KESİN ÇALIŞAN ALTIN ÇERÇEVE İŞLEMELERİ */}
+                {/* ALTIN ÇERÇEVE İŞLEMELERİ */}
                 <div 
                   className="absolute inset-2 rounded-sm pointer-events-none" 
-                  style={{ border: '1px solid rgba(212, 175, 55, 0.4)' }} // Altın Rengi Çerçeve 1
+                  style={{ border: '1px solid rgba(212, 175, 55, 0.4)' }}
                 />
                 <div 
                   className="absolute inset-3 rounded-sm pointer-events-none" 
-                  style={{ border: '1.5px double rgba(212, 175, 55, 0.25)' }} // Çift Çizgili Altın Çerçeve 2
+                  style={{ border: '1.5px double rgba(212, 175, 55, 0.25)' }}
                 />
                 
                 {/* Köşe İşlemeleri */}
@@ -99,7 +94,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                     </p>
                   )}
                   
-                  {/* KESİN ÇALIŞAN KOYU YEŞİL EL YAZISI */}
+                  {/* KOYU YEŞİL EL YAZISI */}
                   <h1 
                     className="mb-1 tracking-wide"
                     style={{ 
@@ -135,7 +130,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
               <motion.div
                 initial={{ rotateX: 0 }}
                 animate={isFlapOpen ? { rotateX: 155 } : { rotateX: 0 }}
-                transition={smoothTransition}
+                transition={{ duration: 1.5, ease: "easeOut" }}
                 style={{ 
                   transformOrigin: "top center",
                   transformStyle: "preserve-3d",
@@ -152,7 +147,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
               <motion.div
                 initial={{ rotateX: 0, opacity: 1 }}
                 animate={isFlapOpen ? { rotateX: 155, y: -70, scale: 0.85, opacity: 0 } : { rotateX: 0, opacity: 1 }}
-                transition={{ duration: 1.3, ease: [0.25, 1, 0.5, 1] }}
+                transition={{ duration: 1.3, ease: "easeOut" }}
                 style={{ 
                   transformOrigin: "top center",
                   zIndex: 35
