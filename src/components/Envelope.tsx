@@ -86,9 +86,13 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                     <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                       <path d="M0,0 L100,0 L50,100 Z" fill="#EAEAE6" />
                     </svg>
-                    {/* Wax Seal */}
-                    <div className="absolute top-[40%] w-20 h-20 rounded-full bg-accent shadow-lg flex items-center justify-center border-4 border-white/20">
-                       <span className="font-script text-white text-3xl pt-1">A&Ç</span>
+                    {/* Yeni Resimli Wax Seal */}
+                    <div className="absolute top-[40%] w-20 h-20 flex items-center justify-center">
+                       <img 
+                         src="/yeni-muhur.png" 
+                         alt="Mühür" 
+                         className="w-full h-full object-contain filter drop-shadow-md"
+                       />
                     </div>
                  </motion.div>
              </motion.div>
