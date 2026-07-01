@@ -3,7 +3,7 @@ import { useCountdown } from '../hooks/useCountdown';
 import { Section } from './Section';
 
 const TimeUnit = ({ value, label }: { value: number; label: string }) => (
-  // Kutuların kenarlıklarını (border) biraz daha belirginleştirip, iç gölge vererek oymalı bir lüks hava kattık
+  // İç kutulardaki lüks preslenmiş hava ve cam dokusu korundu
   <div className="flex flex-col items-center justify-center p-4 border border-white/30 rounded-xl md:aspect-square bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_4px_10px_rgba(0,0,0,0.1)]">
     <span className="font-serif text-4xl md:text-5xl text-white font-normal mb-1 drop-shadow-sm">
       {value.toString().padStart(2, '0')}
@@ -20,23 +20,23 @@ export const Countdown: React.FC = () => {
   const { days, hours, minutes, seconds } = useCountdown(targetDate);
 
   return (
-    // Kutuyu daha yuvarlak (rounded-2xl) ve tok bir gölgeyle (shadow-2xl) vurguladık
-    <Section className="text-center my-10 relative overflow-hidden py-14 rounded-2xl shadow-[0_20px_40px_-15px_rgba(76,100,68,0.5)] mx-4 md:mx-auto max-w-4xl border border-[#4C6444]/30">
+    // Dış gölge rengi soğuk maviye (#203342) göre yeniden uyarlandı
+    <Section className="text-center my-10 relative overflow-hidden py-14 rounded-2xl shadow-[0_20px_40px_-15px_rgba(32,51,66,0.5)] mx-4 md:mx-auto max-w-4xl border border-[#203342]/30">
       
-      {/* 1. ANA YEŞİL ARKA PLAN VE LÜKS KABARTMA DOKUSU */}
+      {/* 1. SOĞUK KOYU MAVİ ARKA PLAN VE LÜKS KABARTMA DOKUSU */}
       <div 
-        className="absolute inset-0 bg-[#4C6444]"
+        className="absolute inset-0 bg-[#203342]"
         style={{
-          // Kendinden kabartmalı şık kağıt lifi dokusu (texture)
+          // Kağıt lifi dokusu korundu
           backgroundImage: `url('https://www.transparenttextures.com/patterns/paper-fibers.png')`,
           opacity: 0.95
         }}
       />
 
-      {/* 2. İÇ GÖLGE (Kutuya derinlik ve preslenmiş kağıt hissi verir) */}
-      <div className="absolute inset-0 shadow-[inset_0_0_50px_rgba(0,0,0,0.35)] pointer-events-none" />
+      {/* 2. İÇ GÖLGE (Preslenmiş ağır kağıt hissi) */}
+      <div className="absolute inset-0 shadow-[inset_0_0_50px_rgba(0,0,0,0.4)] pointer-events-none" />
 
-      {/* 3. MERKEZİ PARILTI (Hafifletildi ki dokuyu bozmasın, sadece asil bir ışık versin) */}
+      {/* 3. MERKEZİ PARILTI (Mavi üzerinde gece ışıltısı gibi durması için hafifletildi) */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute top-[-50%] left-[-20%] w-[150%] h-[200%] bg-white/5 rounded-full blur-[80px]"></div>
       </div>
