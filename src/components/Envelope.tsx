@@ -9,7 +9,6 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
   const [isFlapOpen, setIsFlapOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
-  // Linkten kişiye özel isim çekme mantığı
   const urlParams = new URLSearchParams(window.location.search);
   const misafirIsmi = urlParams.get('kisi')?.replace(/_/g, ' ') || ''; 
 
@@ -27,7 +26,6 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
     }, 3400);
   };
 
-  // İpeksi pürüzsüzlük sağlayan özel lüks animasyon eğrisi (Cubic Bezier)
   const smoothTransition = {
     duration: 1.5,
     ease: [0.25, 1, 0.5, 1]
@@ -35,6 +33,9 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
 
   return (
     <AnimatePresence>
+      {/* Şık El Yazısı Fontunu Dışarıdan Doğrudan Yüklüyoruz */}
+      <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+
       {isVisible && (
         <motion.div
           initial={{ opacity: 1 }}
@@ -43,7 +44,6 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
           className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 select-none bg-no-repeat bg-center bg-cover"
           style={{ backgroundImage: 'url(/floral_bg.png)' }}
         >
-          {/* 3D Perspektif Alanı */}
           <div className="relative w-full max-w-md h-64 mx-4 perspective-2000 flex flex-col items-center">
             
             <motion.div 
@@ -53,7 +53,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
               className="relative w-full h-full shadow-[0_20px_50px_rgba(0,0,0,0.18)] rounded-lg"
             >
               
-              {/* 1. ZARF ARKA DUVARI & CREAMY PAPER DOKUSU */}
+              {/* 1. ZARF ARKA DUVARI */}
               <div 
                 className="absolute inset-0 rounded-lg overflow-hidden bg-[#D4E2EC]"
                 style={{ 
@@ -65,7 +65,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 <div className="absolute inset-0 bg-black/[0.02] shadow-inner" />
               </div>
 
-              {/* 2. DAVETİYE MEKTUBU */}
+              {/* 2. DAVETİYE MEKTUBU (GARANTİLİ STİL ENTEGRASYONU) */}
               <motion.div
                 initial={{ y: 0, scale: 1, zIndex: 2 }}
                 animate={isFlapOpen ? { y: -140, scale: 1.03, zIndex: 2 } : { y: 0, scale: 1, zIndex: 2 }}
@@ -74,31 +74,49 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                   duration: 1.6,
                   ease: [0.25, 1, 0.5, 1] 
                 }}
-                className="absolute inset-x-4 top-3 bottom-3 bg-white shadow-lg p-5 flex flex-col items-center justify-center text-center rounded-md border border-neutral-100/80"
+                className="absolute inset-x-4 top-3 bottom-3 bg-white shadow-lg p-5 flex flex-col items-center justify-center text-center rounded-md border border-neutral-100"
               >
-                {/* Kenar İşlemeli Çerçeve Efekti */}
-                <div className="absolute inset-1.5 border border-amber-600/20 rounded-sm pointer-events-none" />
-                <div className="absolute inset-2 border border-amber-600/10 rounded-sm pointer-events-none" />
+                {/* KESİN ÇALIŞAN ALTIN ÇERÇEVE İŞLEMELERİ */}
+                <div 
+                  className="absolute inset-2 rounded-sm pointer-events-none" 
+                  style={{ border: '1px solid rgba(212, 175, 55, 0.4)' }} // Altın Rengi Çerçeve 1
+                />
+                <div 
+                  className="absolute inset-3 rounded-sm pointer-events-none" 
+                  style={{ border: '1.5px double rgba(212, 175, 55, 0.25)' }} // Çift Çizgili Altın Çerçeve 2
+                />
                 
-                <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-amber-600/30 pointer-events-none" />
-                <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-amber-600/30 pointer-events-none" />
+                {/* Köşe İşlemeleri */}
+                <div className="absolute top-3 left-3 w-4 h-4 pointer-events-none" style={{ borderTop: '2px solid #D4AF37', borderLeft: '2px solid #D4AF37' }} />
+                <div className="absolute top-3 right-3 w-4 h-4 pointer-events-none" style={{ borderTop: '2px solid #D4AF37', borderRight: '2px solid #D4AF37' }} />
+                <div className="absolute bottom-3 left-3 w-4 h-4 pointer-events-none" style={{ borderBottom: '2px solid #D4AF37', borderLeft: '2px solid #D4AF37' }} />
+                <div className="absolute bottom-3 right-3 w-4 h-4 pointer-events-none" style={{ borderBottom: '2px solid #D4AF37', borderRight: '2px solid #D4AF37' }} />
 
                 <div className="relative z-10 flex flex-col items-center justify-center">
                   {misafirIsmi && (
-                    <p className="font-sans text-[10px] text-stone-400 uppercase tracking-[0.25em] mb-2">
+                    <p className="font-sans text-[10px] text-stone-400 uppercase tracking-[0.25em] mb-1">
                       Sn. {misafirIsmi}
                     </p>
                   )}
                   
-                  <h1 className="font-script text-4xl text-[#1E3B2B] mb-0.5 tracking-wide drop-shadow-[0_0.5px_0.5px_rgba(0,0,0,0.05)]">
+                  {/* KESİN ÇALIŞAN KOYU YEŞİL EL YAZISI */}
+                  <h1 
+                    className="mb-1 tracking-wide"
+                    style={{ 
+                      fontFamily: "'Great Vibes', cursive", 
+                      fontSize: '3rem', 
+                      color: '#1E3B2B',
+                      lineHeight: '1.2'
+                    }}
+                  >
                     Ayça & Çağkan
                   </h1>
                   
-                  <p className="font-serif italic text-sm text-amber-800/80 my-1 tracking-wider">
+                  <p className="font-serif italic text-sm text-amber-800/80 my-0.5 tracking-wider">
                     Düğün Davetiyesi
                   </p>
                   
-                  <p className="font-sans text-[11px] mt-3 tracking-[0.3em] text-stone-500 font-light">
+                  <p className="font-sans text-[11px] mt-2 tracking-[0.3em] text-stone-500 font-light">
                     22 . 08 . 2026
                   </p>
                 </div>
