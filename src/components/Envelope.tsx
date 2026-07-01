@@ -17,9 +17,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
     
     setIsFlapOpen(true);
 
-    // MÜZİK SİNYALİ: Tıklama gerçekleştiği an ana sayfaya pürüzsüzce sinyal gönderir
-    window.dispatchEvent(new Event('envelope-opened'));
-
+    // İLK ATTIĞINIZ ORİJİNAL MANTIK: Müzik kodu yok, sadece zamanı gelince ana sayfaya geçişi (onOpen) tetikler.
     setTimeout(() => {
       setIsVisible(false);
     }, 2800);
@@ -31,6 +29,9 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
 
   return (
     <AnimatePresence>
+      {/* JSX Uyumlu Kapatılmış Font Linki (Hata vermemesi için sonu '/' ile bitiyor) */}
+      <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet" />
+
       {isVisible && (
         <motion.div
           initial={{ opacity: 1 }}
@@ -39,9 +40,6 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
           className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 select-none bg-no-repeat bg-center bg-cover"
           style={{ backgroundImage: 'url(/floral_bg.png)' }}
         >
-          {/* Font yükleme etiketi, React JSX kurallarına göre sonuna eğik çizgi eklenerek hatasız kapatıldı */}
-          <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet" />
-
           <div className="relative w-full max-w-md h-64 mx-4 perspective-2000 flex flex-col items-center">
             
             <motion.div 
