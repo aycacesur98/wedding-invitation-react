@@ -1,20 +1,19 @@
 import React from 'react';
-import { Heart } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="py-12 text-center bg-secondary/50 border-t border-primary/10 mt-12">
-      <div className="flex justify-center mb-4">
-        <Heart size={24} className="text-primary/40 fill-primary/10" />
-      </div>
-      <h2 className="font-script text-3xl text-text mb-2">Ayça & Çağkan</h2>
-      <p className="font-sans text-xs text-text/60 mb-6 uppercase tracking-widest">22 Ağustos 2026</p>
-      <p className="font-sans text-xs text-text/40 flex items-center justify-center gap-1">
-         <Heart size={10} className="fill-red-400 text-red-400" /> 
+    <footer className="fixed bottom-0 left-0 right-0 z-40 bg-secondary/90 backdrop-blur-md border-t border-primary/20 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] flex flex-row items-center justify-center gap-3 md:gap-4 select-none">
+      
+      <h2 className="font-script text-2xl md:text-3xl text-text drop-shadow-sm">
+        Ayça & Çağkan
+      </h2>
+      
+      <span className="text-text/30 text-xs md:text-sm">|</span>
+      
+      <p className="font-sans text-[10px] md:text-xs text-text/70 uppercase tracking-[0.2em] mt-1 md:mt-1.5">
+        22 Ağustos 2026
       </p>
-      <p className="font-sans text-[12px] text-text/30 mt-2">
-        Hecho por: <a href="https://alaskaweb.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors font-bold">Alaska Tech</a>
-      </p>
+
     </footer>
   );
 };
