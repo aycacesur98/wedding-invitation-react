@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface EnvelopeProps {
@@ -9,28 +9,22 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
   const [isFlapOpen, setIsFlapOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
-  useEffect(() => {
-    // 1. Wait a bit, then open flap
-    const openTimer = setTimeout(() => {
-      setIsFlapOpen(true);
-    }, 1000);
+  const handleOpenEnvelope = () => {
+    if (isFlapOpen) return; // Zaten açılıyorsa tekrar tetikleme
+    
+    // 1. Önce zarfın kapağını aç
+    setIsFlapOpen(true);
 
-    // 2. Wait for open animation (1.5s) + some reading time, then fade out
-    const fadeTimer = setTimeout(() => {
+    // 2. Kapak animasyonu (1.2s) bittikten sonra zarfı yavaşça kaybet
+    setTimeout(() => {
       setIsVisible(false);
-    }, 3500);
+    }, 1500);
 
-    // 3. Notify parent to show content
-    const finishTimer = setTimeout(() => {
+    // 3. Ana site içeriğini ekrana getir
+    setTimeout(() => {
       onOpen();
-    }, 4500);
-
-    return () => {
-      clearTimeout(openTimer);
-      clearTimeout(fadeTimer);
-      clearTimeout(finishTimer);
-    };
-  }, [onOpen]);
+    }, 2200);
+  };
 
   return (
     <AnimatePresence>
@@ -38,7 +32,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.8 }}
           className="fixed inset-0 z-50 flex items-center justify-center bg-secondary"
         >
           <div className="relative w-full max-w-sm h-64 mx-4 perspective-1000">
@@ -55,7 +49,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 <motion.div
                   initial={{ y: 0 }}
                   animate={isFlapOpen ? { y: -120 } : { y: 0 }}
-                  transition={{ delay: 0.5, duration: 1 }}
+                  transition={{ delay: 0.3, duration: 1 }}
                   className="absolute inset-x-2 top-2 bottom-2 bg-white shadow-sm p-6 flex flex-col items-center justify-center text-center z-[5]"
                 >
                    <h1 className="font-serif text-3xl text-text mb-2">Ayça & Çağkan</h1>
@@ -86,14 +80,20 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                     <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                       <path d="M0,0 L100,0 L50,100 Z" fill="#EAEAE6" />
                     </svg>
-                    {/* Yeni Resimli Wax Seal */}
-                    <div className="absolute top-[40%] w-20 h-20 flex items-center justify-center">
-                       <img 
-                         src="/yeni-muhur.png" 
-                         alt="Mühür" 
-                         className="w-full h-full object-contain filter drop-shadow-md"
-                       />
-                    </div>
+                 </motion.div>
+
+                 {/* Tıklanabilir Büyük Mühür (En Üstte) */}
+                 <motion.div 
+                    animate={isFlapOpen ? { opacity: 0, scale: 0.8 } : { opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute top-[42%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 z-40 flex items-center justify-center cursor-pointer"
+                    onClick={handleOpenEnvelope}
+                 >
+                    <img 
+                      src="/yeni-muhur.png" 
+                      alt="Mühür" 
+                      className="w-full h-full object-contain filter drop-shadow-md hover:scale-105 transition-transform duration-200"
+                    />
                  </motion.div>
              </motion.div>
           </div>
