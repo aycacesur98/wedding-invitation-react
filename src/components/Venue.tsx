@@ -10,7 +10,7 @@ export const Venue: React.FC = () => {
   const calendarEvent = {
     title: 'Ayça & Çağkan Düğün Daveti',
     description: 'Mutlu günümüzde yanımızda olmanızdan mutluluk duyarız.',
-    location: 'Mia464, Polonezköy, Beykoz/İstanbul',
+    location: 'Mia 464, Polonezköy, Beykoz/İstanbul',
     start: '20260822T183000',
     end: '20260823T000000',
   };
