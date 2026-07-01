@@ -18,13 +18,20 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
     
     setIsFlapOpen(true);
 
+    // Mektubun süzülme süresi uzadığı için kapanış zamanlamalarını da senkronize ettik
     setTimeout(() => {
       setIsVisible(false);
-    }, 2400);
+    }, 2800);
 
     setTimeout(() => {
       onOpen();
-    }, 3000);
+    }, 3400);
+  };
+
+  // İpeksi pürüzsüzlük sağlayan özel lüks animasyon eğrisi (Cubic Bezier)
+  const smoothTransition = {
+    duration: 1.5,
+    ease: [0.25, 1, 0.5, 1]
   };
 
   return (
@@ -34,7 +41,6 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8 }}
-          // Yeni çiçekli arka plan görseliniz buraya esnek şekilde entegre edildi
           className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 select-none bg-no-repeat bg-center bg-cover"
           style={{ backgroundImage: 'url(/floral_bg.png)' }}
         >
@@ -42,58 +48,77 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
           <div className="relative w-full max-w-md h-64 mx-4 perspective-2000 flex flex-col items-center">
             
             <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6 }}
-              className="relative w-full h-full shadow-[0_20px_40px_rgba(0,0,0,0.15)] rounded-lg"
+              transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }} // Zarf ekrana gelirken tatlı bir yaylanma efekti
+              className="relative w-full h-full shadow-[0_20px_50px_rgba(0,0,0,0.18)] rounded-lg"
             >
               
-              {/* 1. ZARF ARKA DUVARI & CREAMY PAPER DOKUSU (Bebe Mavisi Harmanlı) */}
+              {/* 1. ZARF ARKA DUVARI & CREAMY PAPER DOKUSU */}
               <div 
                 className="absolute inset-0 rounded-lg overflow-hidden bg-[#D4E2EC]"
                 style={{ 
                   backgroundImage: 'url(/creamy_paper.png)',
                   backgroundSize: 'cover',
-                  backgroundBlendMode: 'multiply' // Kağıt dokusunu bebe mavisiyle birleştirir
+                  backgroundBlendMode: 'multiply'
                 }}
               >
                 <div className="absolute inset-0 bg-black/[0.02] shadow-inner" />
               </div>
 
-              {/* 2. DAVETİYE MEKTUBU */}
+              {/* 2. DAVETİYE MEKTUBU (İPEKSİ SÜZÜLME ANİMASYONU) */}
               <motion.div
-                initial={{ y: 0, zIndex: 2 }}
-                animate={isFlapOpen ? { y: -130, scale: 1.02 } : { y: 0, zIndex: 2 }}
-                transition={{ delay: 0.5, duration: 1.2, ease: "easeInOut" }}
-                className="absolute inset-x-4 top-3 bottom-3 bg-white shadow-lg p-6 flex flex-col items-center justify-center text-center rounded-md border border-neutral-100"
+                initial={{ y: 0, scale: 1, zIndex: 2 }}
+                animate={isFlapOpen ? { y: -140, scale: 1.03, zIndex: 2 } : { y: 0, scale: 1, zIndex: 2 }}
+                transition={{ 
+                  delay: 0.25, // Kapağın biraz açılmasını bekleyip pürüzsüzce yükselir
+                  duration: 1.6, // Daha yavaş ve asil bir süzülme hızı
+                  ease: [0.25, 1, 0.5, 1] 
+                }}
+                className="absolute inset-x-4 top-3 bottom-3 bg-white shadow-lg p-5 flex flex-col items-center justify-center text-center rounded-md border border-neutral-100/80"
               >
-                {/* Linkte isim varsa mektubun en üstünde zarifçe görünür */}
-                {misafirIsmi && (
-                  <p className="font-sans text-[11px] text-amber-800/80 uppercase tracking-[0.2em] mb-2">
-                    Sn. {misafirIsmi}
+                {/* Kenar İşlemeli Çerçeve Efekti */}
+                <div className="absolute inset-1.5 border border-amber-600/20 rounded-sm pointer-events-none" />
+                <div className="absolute inset-2 border border-amber-600/10 rounded-sm pointer-events-none" />
+                
+                <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-amber-600/30 pointer-events-none" />
+                <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-amber-600/30 pointer-events-none" />
+
+                <div className="relative z-10 flex flex-col items-center justify-center">
+                  {misafirIsmi && (
+                    <p className="font-sans text-[10px] text-stone-400 uppercase tracking-[0.25em] mb-2">
+                      Sn. {misafirIsmi}
+                    </p>
+                  )}
+                  
+                  <h1 className="font-script text-4xl text-[#1E3B2B] mb-0.5 tracking-wide drop-shadow-[0_0.5px_0.5px_rgba(0,0,0,0.05)]">
+                    Ayça & Çağkan
+                  </h1>
+                  
+                  <p className="font-serif italic text-sm text-amber-800/80 my-1 tracking-wider">
+                    Düğün Davetiyesi
                   </p>
-                )}
-                <h1 className="font-serif text-3xl text-neutral-800 mb-1 tracking-wide">Ayça & Çağkan</h1>
-                <p className="font-script text-lg text-amber-800 my-1">Düğün Davetiyesi</p>
-                <p className="font-sans text-xs mt-4 tracking-widest text-neutral-500">22 . 08 . 2026</p>
+                  
+                  <p className="font-sans text-[11px] mt-3 tracking-[0.3em] text-stone-500 font-light">
+                    22 . 08 . 2026
+                  </p>
+                </div>
               </motion.div>
 
-              {/* 3. İÇ İÇE GEÇEN ALT VE YAN KAPAKLAR (Yumuşak Bebe Mavisi Tonları) */}
+              {/* 3. İÇ İÇE GEÇEN ALT VE YAN KAPAKLAR */}
               <div className="absolute inset-0 z-10 pointer-events-none">
                 <svg className="absolute inset-0 w-full h-full drop-shadow-[0_-2px_4px_rgba(0,0,0,0.06)]" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  {/* Yan kapaklar biraz daha gölgeli durması için tatlı bir ton kırılması içeriyor */}
                   <path d="M0,-1 L52,50 L0,101 Z" fill="#CBDCE7" />
                   <path d="M100,-1 L48,50 L100,101 Z" fill="#CBDCE7" />
-                  {/* Ön alt kapak derinlik katmak için milimetrik koyulaştırıldı */}
                   <path d="M-1,101 L50,45 L101,101 Z" fill="#C2D5E2" />
                 </svg>
               </div>
 
-              {/* 4. ANİMASYONLU ÜST KAPAK */}
+              {/* 4. ANİMASYONLU ÜST KAPAK (PÜRÜZSÜZ GERİYE DÖNÜŞ) */}
               <motion.div
                 initial={{ rotateX: 0 }}
-                animate={isFlapOpen ? { rotateX: 160 } : { rotateX: 0 }}
-                transition={{ duration: 1.2, ease: "easeInOut" }}
+                animate={isFlapOpen ? { rotateX: 155 } : { rotateX: 0 }}
+                transition={smoothTransition}
                 style={{ 
                   transformOrigin: "top center",
                   transformStyle: "preserve-3d",
@@ -102,16 +127,15 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 className="absolute top-0 inset-x-0 h-[55%] cursor-pointer"
               >
                 <svg className="w-full h-full drop-shadow-[0_4px_5px_rgba(0,0,0,0.08)]" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  {/* Zarfın ilk görünen üst kapağı şık, temiz bir bebe mavisi */}
                   <path d="M-1,-1 L101,-1 L50,102 Z" fill="#D4E2EC" />
                 </svg>
               </motion.div>
 
               {/* 5. PREMIUM MÜHÜR */}
               <motion.div
-                initial={{ rotateX: 0 }}
-                animate={isFlapOpen ? { rotateX: 160, y: -90, scale: 0.8, opacity: 0 } : { rotateX: 0, y: 0 }}
-                transition={{ duration: 1.2, ease: "easeInOut" }}
+                initial={{ rotateX: 0, opacity: 1 }}
+                animate={isFlapOpen ? { rotateX: 155, y: -70, scale: 0.85, opacity: 0 } : { rotateX: 0, opacity: 1 }}
+                transition={{ duration: 1.3, ease: [0.25, 1, 0.5, 1] }}
                 style={{ 
                   transformOrigin: "top center",
                   zIndex: 35
@@ -128,18 +152,4 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
 
             </motion.div>
 
-            {/* 6. ZARFIN ALTINDAKİ ŞIK BİLGİLENDİRME YAZISI */}
-            <motion.p
-              animate={isFlapOpen ? { opacity: 0, y: 10 } : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="absolute bottom-[-60px] font-serif text-sm text-neutral-600 tracking-wider text-center bg-white/60 px-4 py-1.5 rounded-full backdrop-blur-sm shadow-sm"
-            >
-              Açmak için lütfen zarfa tıklayınız
-            </motion.p>
-
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
+            {/* 6. ZAR
