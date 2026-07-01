@@ -18,7 +18,6 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
     
     setIsFlapOpen(true);
 
-    // Mektubun süzülme süresi uzadığı için kapanış zamanlamalarını da senkronize ettik
     setTimeout(() => {
       setIsVisible(false);
     }, 2800);
@@ -50,7 +49,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
             <motion.div 
               initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }} // Zarf ekrana gelirken tatlı bir yaylanma efekti
+              transition={{ duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
               className="relative w-full h-full shadow-[0_20px_50px_rgba(0,0,0,0.18)] rounded-lg"
             >
               
@@ -66,13 +65,13 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 <div className="absolute inset-0 bg-black/[0.02] shadow-inner" />
               </div>
 
-              {/* 2. DAVETİYE MEKTUBU (İPEKSİ SÜZÜLME ANİMASYONU) */}
+              {/* 2. DAVETİYE MEKTUBU */}
               <motion.div
                 initial={{ y: 0, scale: 1, zIndex: 2 }}
                 animate={isFlapOpen ? { y: -140, scale: 1.03, zIndex: 2 } : { y: 0, scale: 1, zIndex: 2 }}
                 transition={{ 
-                  delay: 0.25, // Kapağın biraz açılmasını bekleyip pürüzsüzce yükselir
-                  duration: 1.6, // Daha yavaş ve asil bir süzülme hızı
+                  delay: 0.25,
+                  duration: 1.6,
                   ease: [0.25, 1, 0.5, 1] 
                 }}
                 className="absolute inset-x-4 top-3 bottom-3 bg-white shadow-lg p-5 flex flex-col items-center justify-center text-center rounded-md border border-neutral-100/80"
@@ -114,7 +113,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 </svg>
               </div>
 
-              {/* 4. ANİMASYONLU ÜST KAPAK (PÜRÜZSÜZ GERİYE DÖNÜŞ) */}
+              {/* 4. ANİMASYONLU ÜST KAPAK */}
               <motion.div
                 initial={{ rotateX: 0 }}
                 animate={isFlapOpen ? { rotateX: 155 } : { rotateX: 0 }}
@@ -152,4 +151,18 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
 
             </motion.div>
 
-            {/* 6. ZAR
+            {/* 6. ZARFIN ALTINDAKİ ŞIK BİLGİLENDİRME YAZISI */}
+            <motion.p
+              animate={isFlapOpen ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="absolute bottom-[-60px] font-serif text-sm text-neutral-600 tracking-wider text-center bg-white/60 px-4 py-1.5 rounded-full backdrop-blur-sm shadow-sm"
+            >
+              Açmak için lütfen zarfa tıklayınız
+            </motion.p>
+
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
