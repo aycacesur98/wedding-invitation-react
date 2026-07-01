@@ -12,15 +12,12 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
   const handleOpenEnvelope = () => {
     if (isFlapOpen) return;
     
-    // 1. Üst kapağı aç
     setIsFlapOpen(true);
 
-    // 2. Mektup yukarı süzüldükten sonra zarfı ekrandan yavaşça kaldır
     setTimeout(() => {
       setIsVisible(false);
     }, 2400);
 
-    // 3. Davetiyenin ana içeriğini yükle
     setTimeout(() => {
       onOpen();
     }, 3000);
@@ -33,7 +30,6 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8 }}
-          // Arka plan tam istediğiniz gibi soft Sage Green (Adaçayı yeşili) tonlarında yapıldı
           className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-[#E2E8E4] to-[#C9D6CE] p-4 select-none"
         >
           {/* 3D Perspektif Alanı */}
@@ -54,7 +50,6 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                   backgroundSize: 'cover'
                 }}
               >
-                {/* Zarfın içi için hafif derinlik gölgesi */}
                 <div className="absolute inset-0 bg-black/[0.03] shadow-inner" />
               </div>
 
@@ -70,19 +65,16 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 <p className="font-sans text-xs mt-4 tracking-widest text-neutral-500">22 . 08 . 2026</p>
               </motion.div>
 
-              {/* 3. İÇ İÇE GEÇEN ALT VE YAN KAPAKLAR (Boşluk kalmaması için çizgiler bindirildi) */}
+              {/* 3. İÇ İÇE GEÇEN ALT VE YAN KAPAKLAR */}
               <div className="absolute inset-0 z-10 pointer-events-none">
                 <svg className="absolute inset-0 w-full h-full drop-shadow-[0_-2px_4px_rgba(0,0,0,0.05)]" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  {/* Sol Kapak - Orta çizginin biraz sağından başlar */}
                   <path d="M0,-1 L52,50 L0,101 Z" fill="#E3DED2" />
-                  {/* Sağ Kapak - Orta çizginin biraz solundan başlar */}
                   <path d="M100,-1 L48,50 L100,101 Z" fill="#E3DED2" />
-                  {/* Alt Kapak - Diğer kapakların üstüne tam binecek şekilde ayarlandı */}
                   <path d="M-1,101 L50,45 L101,101 Z" fill="#DED9CC" />
                 </svg>
               </div>
 
-              {/* 4. ANİMASYONLU ÜST KAPAK (Flap) */}
+              {/* 4. ANİMASYONLU ÜST KAPAK */}
               <motion.div
                 initial={{ rotateX: 0 }}
                 animate={isFlapOpen ? { rotateX: 160 } : { rotateX: 0 }}
@@ -99,22 +91,23 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 </svg>
               </motion.div>
 
-              {/* 5. GÖZÜKÜR VE BÜYÜK PREMIUM MÜHÜR (Zarfla birlikte döner) */}
+              {/* 5. ÇOK DAHA BÜYÜK PREMIUM MÜHÜR */}
               <motion.div
                 initial={{ rotateX: 0 }}
-                animate={isFlapOpen ? { rotateX: 160, y: -80, scale: 0.8, opacity: 0 } : { rotateX: 0, y: 0 }}
+                animate={isFlapOpen ? { rotateX: 160, y: -90, scale: 0.8, opacity: 0 } : { rotateX: 0, y: 0 }}
                 transition={{ duration: 1.2, ease: "easeInOut" }}
                 style={{ 
                   transformOrigin: "top center",
                   zIndex: 35
                 }}
-                className="absolute top-0 left-1/2 -translate-x-1/2 mt-[100px] w-24 h-24 flex items-center justify-center cursor-pointer"
+                // w-24 h-24 değerlerini w-36 h-36 yaparak mührü devasa ve çok daha belirgin hale getirdik
+                className="absolute top-0 left-1/2 -translate-x-1/2 mt-[75px] w-36 h-36 flex items-center justify-center cursor-pointer"
                 onClick={handleOpenEnvelope}
               >
                 <img 
                   src="/yeni-muhur.png" 
                   alt="Düğün Mührü" 
-                  className="w-full h-full object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] active:scale-95 transition-transform duration-100"
+                  className="w-full h-full object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.35)] active:scale-95 transition-transform duration-100"
                 />
               </motion.div>
 
@@ -126,7 +119,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
               transition={{ duration: 0.4 }}
               className="absolute bottom-[-60px] font-serif text-sm text-neutral-600 tracking-wider text-center bg-white/40 px-4 py-1.5 rounded-full backdrop-blur-sm shadow-sm"
             >
-              Açmak için lütfen mühre tıklayınız
+              Açmak için lütfen zarfa tıklayınız
             </motion.p>
 
           </div>
