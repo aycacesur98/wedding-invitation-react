@@ -17,12 +17,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
     
     setIsFlapOpen(true);
 
-    // MÜZİK İNTERAKSİYONU: Kullanıcı zarfa tıkladığı an arkadaki müziği tetikler
-    const audio = document.getElementById('bg-music') as HTMLAudioElement;
-    if (audio) {
-      audio.play().catch(err => console.log("Müzik otomatik oynatılamadı, etkileşim bekleniyor:", err));
-    }
-
+    // Müzik tetikleyicisini buradan tamamen kaldırdık (En eski orijinal mantığa dönüldü)
     setTimeout(() => {
       setIsVisible(false);
     }, 2800);
@@ -34,7 +29,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
 
   return (
     <AnimatePresence>
-      {/* Büyük harfleri muazzam elegant ve yatayda geniş gösteren premium font yüklemesi */}
+      {/* Şık Premium Font Yüklemesi */}
       <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet" />
 
       {isVisible && (
@@ -100,7 +95,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                     </p>
                   )}
                   
-                  {/* YENİ ULTRA ELEGANT VE KOYU YEŞİL FONT BAŞLIĞI */}
+                  {/* PRESTİJLİ VE KOYU YEŞİL FONT BAŞLIĞI */}
                   <h1 
                     className="mb-1 tracking-wide font-normal"
                     style={{ 
@@ -156,36 +151,4 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
               {/* 5. PREMIUM MÜHÜR */}
               <motion.div
                 initial={{ rotateX: 0, opacity: 1 }}
-                animate={isFlapOpen ? { rotateX: 155, y: -70, scale: 0.85, opacity: 0 } : { rotateX: 0, opacity: 1 }}
-                transition={{ duration: 1.3, ease: "easeOut" }}
-                style={{ 
-                  transformOrigin: "top center",
-                  zIndex: 35
-                }}
-                className="absolute top-0 left-1/2 -translate-x-1/2 mt-[75px] w-36 h-36 flex items-center justify-center cursor-pointer"
-                onClick={handleOpenEnvelope}
-              >
-                <img 
-                  src="/yeni-muhur.png" 
-                  alt="Düğün Mührü" 
-                  className="w-full h-full object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.25)] active:scale-95 transition-transform duration-100"
-                />
-              </motion.div>
-
-            </motion.div>
-
-            {/* 6. ZARFIN ALTINDAKİ ŞIK BİLGİLENDİRME YAZISI */}
-            <motion.p
-              animate={isFlapOpen ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="absolute bottom-[-60px] font-serif text-sm text-neutral-600 tracking-wider text-center bg-white/60 px-4 py-1.5 rounded-full backdrop-blur-sm shadow-sm"
-            >
-              Açmak için lütfen zarfa tıklayınız
-            </motion.p>
-
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
+                animate={isFlapOpen ? { rotateX: 15
