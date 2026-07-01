@@ -11,9 +11,10 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative h-screen w-full overflow-hidden flex flex-col justify-center items-center text-center">
+    // h-[90vh] yaparak ekranın altından birkaç cm boşluk bıraktık, böylece insanlar aşağıyı görüp kaydırmak isteyecek
+    <section className="relative h-[90vh] min-h-[600px] w-full overflow-hidden flex flex-col justify-center items-center text-center">
       
-      {/* VINTAGE TABELA ŞEKLİNİ OLUŞTURAN GİZLİ VEKTÖR MASKESİ (SİLMEYİN) */}
+      {/* VINTAGE TABELA ŞEKLİNİ OLUŞTURAN GİZLİ VEKTÖR MASKESİ */}
       <svg width="0" height="0" className="absolute pointer-events-none">
         <defs>
           <clipPath id="vintage-plaque" clipPathUnits="objectBoundingBox">
@@ -57,20 +58,18 @@ export const Hero: React.FC = () => {
       </div>
 
       {/* İçerik Bölümü */}
-      <div className="relative z-20 px-4 max-w-5xl w-full flex flex-col items-center justify-center h-full">
+      <div className="relative z-20 px-4 max-w-5xl w-full flex flex-col items-center justify-center h-full pt-10">
         
-        {/* BUZLU VINTAGE CAM TABELA */}
+        {/* BUZLU VINTAGE CAM TABELA - Opaklık artırıldı, çok daha net ve belirgin bir buzlu cam yapıldı */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 1.4, ease: [0.25, 1, 0.5, 1] }}
           className="relative w-full max-w-lg md:max-w-3xl"
-          // Tabela şekline tam oturan, havada asılı gibi durmasını sağlayan gölge
-          style={{ filter: 'drop-shadow(0 25px 35px rgba(0, 0, 0, 0.45))' }}
+          style={{ filter: 'drop-shadow(0 20px 30px rgba(0, 0, 0, 0.35))' }}
         >
           <div 
-            className="w-full h-full backdrop-blur-[6px] bg-gradient-to-b from-white/15 to-white/5 flex flex-col items-center justify-center px-10 py-16 md:px-16 md:py-20"
-            // Üstteki görünmez vektör maskesini cama uyguluyoruz
+            className="w-full h-full backdrop-blur-md bg-white/25 flex flex-col items-center justify-center px-10 py-16 md:px-16 md:py-20"
             style={{ clipPath: 'url(#vintage-plaque)' }}
           >
             <motion.p 
@@ -95,14 +94,14 @@ export const Hero: React.FC = () => {
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ delay: 2.5, duration: 0.8 }}
-              className="h-px w-16 md:w-24 bg-white/60 mx-auto my-4 md:my-6" 
+              className="h-px w-16 md:w-24 bg-white/70 mx-auto my-4 md:my-6" 
             />
 
             <motion.p 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 2.7 }}
-              className="font-sans uppercase tracking-[0.25em] text-[10px] md:text-sm text-white/90 drop-shadow-md"
+              className="font-sans uppercase tracking-[0.25em] text-[10px] md:text-sm text-white/95 drop-shadow-md"
             >
               Davetlisiniz!
             </motion.p>
@@ -118,21 +117,22 @@ export const Hero: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Daha Vurgulu Aşağı Kaydır (CTA) Butonu */}
+        {/* İNCE DİKDÖRTGEN BUZLU CAMLI VE VURGULU CTA BUTONU */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 3.5 }}
-          className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-4 z-30"
+          className="absolute bottom-6 left-0 right-0 flex flex-col items-center z-30"
         >
           <button
             onClick={scrollToRSVP}
-            className="group flex flex-col items-center gap-2 text-white hover:text-[#D4AF37] transition-colors drop-shadow-2xl cursor-pointer"
+            // Butonun arkasına yatay, ince ve şık bir buzlu cam eklendi
+            className="group flex flex-col items-center gap-1 text-white hover:text-[#D4AF37] transition-all duration-300 backdrop-blur-md bg-white/15 border border-white/30 px-8 py-2.5 rounded-2xl shadow-[0_8px_20px_rgba(0,0,0,0.15)] cursor-pointer"
           >
-            <span className="font-sans uppercase tracking-[0.2em] text-sm md:text-base font-bold drop-shadow-lg">
+            <span className="font-sans uppercase tracking-[0.2em] text-[11px] md:text-sm font-semibold drop-shadow-lg mt-0.5">
               Katılımınızı Onaylayın
             </span>
-            <ChevronDown className="animate-bounce w-8 h-8 opacity-90 drop-shadow-lg mt-1" />
+            <ChevronDown className="animate-bounce w-6 h-6 opacity-90 drop-shadow-md" />
           </button>
         </motion.div>
       </div>
