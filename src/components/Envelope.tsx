@@ -58,9 +58,9 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                   transition={{ delay: 0.5, duration: 1 }}
                   className="absolute inset-x-2 top-2 bottom-2 bg-white shadow-sm p-6 flex flex-col items-center justify-center text-center z-[5]"
                 >
-                   <h1 className="font-serif text-3xl text-text mb-2">Karla & Juan</h1>
+                   <h1 className="font-serif text-3xl text-text mb-2">Ayça & Çağkan</h1>
                    <p className="font-script text-xl text-text">Save the Date</p>
-                   <p className="font-sans text-xs mt-4 text-text/60">28 . 03 . 2026</p>
+                   <p className="font-sans text-xs mt-4 text-text/60">22 . 08 . 2026</p>
                 </motion.div>
 
                 {/* Envelope Flaps (Front) */}
@@ -88,7 +88,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                     </svg>
                     {/* Wax Seal */}
                     <div className="absolute top-[40%] w-20 h-20 rounded-full bg-accent shadow-lg flex items-center justify-center border-4 border-white/20">
-                       <span className="font-script text-white text-3xl pt-1">J&K</span>
+                       <span className="font-script text-white text-3xl pt-1">A&Ç</span>
                     </div>
                  </motion.div>
              </motion.div>
