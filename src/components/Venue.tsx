@@ -5,22 +5,25 @@ import { Section } from './Section';
 
 // Mia 464 Fotoğrafları
 const VENUE_PHOTOS = [
-  '/Mia_01.jpg',
-  '/Mia_02.jpg',
-  '/Mia_03.jpg',
-  '/Mia_04.jpg'
+  '/Mia_11.jpg',
+  '/Mia_12.jpg',
+  '/Mia_13.jpg',
+  '/Mia_14.jpg'
 ];
 
 export const Venue: React.FC = () => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
-  // YENİ: SIFIR KASILMA İÇİN PRELOAD (Önceden Yükleme) MOTORU
-  // Sayfa açıldığı an tüm fotoğrafları arka planda sessizce indirip hafızaya alır
+  // AKILLI PRELOAD MOTORU: Sitenin ilk açılış animasyonlarını bozmamak için 4 saniye bekler.
   useEffect(() => {
-    VENUE_PHOTOS.forEach((photoSrc) => {
-      const img = new Image();
-      img.src = photoSrc;
-    });
+    const timer = setTimeout(() => {
+      VENUE_PHOTOS.forEach((photoSrc) => {
+        const img = new Image();
+        img.src = photoSrc;
+      });
+    }, 4000); // 4 saniye sonra sessizce indirmeye başla
+    
+    return () => clearTimeout(timer);
   }, []);
 
   // Mia464 Google Maps Navigasyon Linki
@@ -67,7 +70,7 @@ export const Venue: React.FC = () => {
       <div className="text-center mb-10">
         <h2 className="font-script text-4xl md:text-5xl text-text mb-2">Lokasyon</h2>
         <p className="font-sans text-text/60 tracking-widest text-[11px] md:text-xs">
-          
+       
         </p>
       </div>
 
