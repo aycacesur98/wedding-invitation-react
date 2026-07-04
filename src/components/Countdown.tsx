@@ -17,7 +17,8 @@ const TimeUnit = ({ value, label }: { value: number; label: string }) => (
 export const Countdown: React.FC = () => {
   // Hedef Tarih: 22 Ağustos 2026
   const targetDate = new Date('2026-08-22T18:30:00');
-  const { days, hours, minutes, seconds } = useCountdown(targetDate);
+  // Saniye (seconds) değeri hook'tan dönse de aşağıda kullanmıyoruz
+  const { days, hours, minutes } = useCountdown(targetDate);
 
   return (
     <Section className="text-center my-10 relative overflow-hidden py-14 rounded-2xl shadow-[0_20px_40px_-15px_rgba(26,51,84,0.5)] mx-4 md:mx-auto max-w-4xl border border-[#1A3354]/30">
@@ -28,6 +29,7 @@ export const Countdown: React.FC = () => {
           src="/countdown.JPG" 
           alt="Countdown Background" 
           className="w-full h-full object-cover"
+          // Performans için loading lazy eklenebilir veya format optimize edilebilir
         />
         {/* Yazıların okunabilmesi için üzerine o lacivert tonunda zarif bir filtre eklendi */}
         <div className="absolute inset-0 bg-[#1A3354]/60" />
@@ -49,14 +51,14 @@ export const Countdown: React.FC = () => {
           Sizi aramızda görmekten mutluluk duyarız
         </p>
         
-        {/* Etiketlerin Türkçe karakter hatası vermemesi için doğrudan büyük harflerle el ile yazıldı */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-3xl mx-auto px-4">
+        {/* Saniye kaldırıldı, grid yapısı 3 sütun olarak güncellendi */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-2xl mx-auto px-4">
           <TimeUnit value={days} label="GÜN" />
           <TimeUnit value={hours} label="SAAT" />
           <TimeUnit value={minutes} label="DAKİKA" />
-          <TimeUnit value={seconds} label="SANİYE" />
         </div>
       </div>
     </Section>
   );
 };
+```http://googleusercontent.com/image_generation_content/319
