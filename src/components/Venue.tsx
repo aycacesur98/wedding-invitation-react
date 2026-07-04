@@ -5,10 +5,10 @@ import { Section } from './Section';
 
 // Mia 464 Fotoğrafları
 const VENUE_PHOTOS = [
-  '/Mia_01.JPG',
-  '/Mia_02.JPG',
-  '/Mia_03.JPG',
-  '/Mia_04.JPG'
+  '/Mia_01.jpg',
+  '/Mia_02.jpg',
+  '/Mia_03.jpg',
+  '/Mia_04.jpg'
 ];
 
 export const Venue: React.FC = () => {
@@ -26,11 +26,11 @@ export const Venue: React.FC = () => {
     end: '20260823T000000',
   };
 
-  // 3 saniyede bir otomatik slayt geçişi (Auto-play)
+  // 5 saniyede bir otomatik slayt geçişi (Hız yavaşlatıldı)
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentPhotoIndex((prev) => (prev === VENUE_PHOTOS.length - 1 ? 0 : prev + 1));
-    }, 3000); // 3000ms = 3 saniye
+    }, 5000); // 5000ms = 5 saniye
     return () => clearInterval(timer);
   }, [currentPhotoIndex]);
 
@@ -58,14 +58,14 @@ export const Venue: React.FC = () => {
       <div className="text-center mb-10">
         <h2 className="font-script text-4xl md:text-5xl text-text mb-2">Lokasyon</h2>
         <p className="font-sans text-text/60 tracking-widest text-[11px] md:text-xs">
-          DÜĞÜNÜMÜZÜN GERÇEKLEŞECEĞİ MEKAN
+          
         </p>
       </div>
 
       {/* İkiye Bölünen Şık Tasarım Kutusu */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-0 max-w-5xl mx-auto bg-white rounded-2xl shadow-xl border border-primary/10 overflow-hidden">
         
-        {/* SOL TARAF: Bilgiler ve Butonlar (Dokunulmadı) */}
+        {/* SOL TARAF: Bilgiler ve Butonlar */}
         <div className="p-6 md:p-12 flex flex-col justify-center text-center md:text-left order-2 md:order-1">
           <h3 className="font-serif text-3xl text-text mb-2 font-normal">Mia 464</h3>
           <p className="font-sans text-[#4C6444] font-medium text-sm md:text-base mb-6 tracking-wide">Polonezköy / İstanbul</p>
@@ -111,7 +111,7 @@ export const Venue: React.FC = () => {
           </div>
         </div>
 
-        {/* SAĞ TARAF: YENİ DİNAMİK FOTOĞRAF GALERİSİ (CAROUSEL) */}
+        {/* SAĞ TARAF: DİNAMİK FOTOĞRAF GALERİSİ (CAROUSEL) */}
         <div className="relative h-72 md:h-auto min-h-[350px] bg-neutral-100 overflow-hidden order-1 md:order-2 group">
           
           <AnimatePresence mode="wait">
@@ -125,13 +125,12 @@ export const Venue: React.FC = () => {
               transition={{ duration: 0.8, ease: "easeInOut" }}
               className="absolute inset-0 w-full h-full object-cover"
               onError={(e) => {
-                // Eğer fotoğraf yüklenemezse gizle
                 e.currentTarget.style.display = 'none';
               }}
             />
           </AnimatePresence>
 
-          {/* Carousel Kontrol Okları (Sadece fareyle üzerine gelince belirir) */}
+          {/* Carousel Kontrol Okları */}
           <button 
             onClick={prevPhoto} 
             className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-black/20 hover:bg-black/50 backdrop-blur-sm rounded-full text-white transition-all opacity-0 group-hover:opacity-100 shadow-md z-10"
@@ -146,7 +145,7 @@ export const Venue: React.FC = () => {
             <ChevronRight size={20} />
           </button>
 
-          {/* Alt Noktalar (Hangi fotoğrafta olduğunu gösterir) */}
+          {/* Alt Noktalar */}
           <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
             {VENUE_PHOTOS.map((_, index) => (
               <button
