@@ -13,7 +13,6 @@ export const Timeline: React.FC = () => {
   return (
     <Section id="timeline" className="text-center max-w-4xl mx-auto py-12">
       <h2 className="font-script text-4xl md:text-5xl text-text mb-2">Düğün Akışı</h2>
-      <p className="font-sans text-text/60 mb-12 uppercase tracking-widest text-xs">Büyük günün özel anları</p>
       
       <div className="relative mt-12 px-4">
         {/* Yatay Çizgi (Masaüstü Ekranlar İçin) */}
