@@ -94,7 +94,7 @@ export const RSVPForm: React.FC = () => {
               }
             })}
             type="tel"
-            defaultValue="+"
+            defaultValue="+90"
             className="w-full px-4 py-2 border border-primary/20 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-secondary/30 font-sans"
             placeholder="+90 5XX XXX XX XX"
           />
