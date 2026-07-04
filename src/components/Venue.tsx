@@ -5,10 +5,10 @@ import { Section } from './Section';
 
 // Mia 464 Fotoğrafları
 const VENUE_PHOTOS = [
-  '/Mia_01.jpg',
-  '/Mia_02.jpg',
-  '/Mia_03.jpg',
-  '/Mia_04.jpg'
+  '/Mia_01.JPG',
+  '/Mia_02.JPG',
+  '/Mia_03.JPG',
+  '/Mia_04.JPG'
 ];
 
 export const Venue: React.FC = () => {
