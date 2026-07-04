@@ -14,6 +14,15 @@ const VENUE_PHOTOS = [
 export const Venue: React.FC = () => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
+  // YENİ: SIFIR KASILMA İÇİN PRELOAD (Önceden Yükleme) MOTORU
+  // Sayfa açıldığı an tüm fotoğrafları arka planda sessizce indirip hafızaya alır
+  useEffect(() => {
+    VENUE_PHOTOS.forEach((photoSrc) => {
+      const img = new Image();
+      img.src = photoSrc;
+    });
+  }, []);
+
   // Mia464 Google Maps Navigasyon Linki
   const googleMapsUrl = 'https://maps.google.com/?q=Mia464+Polonezk%C3%B6y'; 
 
@@ -26,7 +35,7 @@ export const Venue: React.FC = () => {
     end: '20260823T000000',
   };
 
-  // 5 saniyede bir otomatik slayt geçişi (Hız yavaşlatıldı)
+  // 5 saniyede bir otomatik slayt geçişi
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentPhotoIndex((prev) => (prev === VENUE_PHOTOS.length - 1 ? 0 : prev + 1));
@@ -160,7 +169,7 @@ export const Venue: React.FC = () => {
             ))}
           </div>
 
-          {/* Fotoğrafın üzerine binen şık transparan harita butonu karartısı */}
+          {/* Harita Butonu Karartısı */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end justify-center p-6 pointer-events-none">
             <a 
               href={googleMapsUrl}
