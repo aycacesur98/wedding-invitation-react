@@ -20,20 +20,20 @@ export const Countdown: React.FC = () => {
   const { days, hours, minutes, seconds } = useCountdown(targetDate);
 
   return (
-    // Dış gölge ve çerçeve renkleri yeni asil lacivert tona (#1A3354) göre uyarlandı
     <Section className="text-center my-10 relative overflow-hidden py-14 rounded-2xl shadow-[0_20px_40px_-15px_rgba(26,51,84,0.5)] mx-4 md:mx-auto max-w-4xl border border-[#1A3354]/30">
       
-      {/* 1. YENİ: ZENGİN GECE YARISI LACİVERTİ ARKA PLAN VE LÜKS KABARTMA DOKUSU */}
-      <div 
-        className="absolute inset-0 bg-[#1A3354]"
-        style={{
-          // Kağıt lifi dokusu korundu
-          backgroundImage: `url('https://www.transparenttextures.com/patterns/paper-fibers.png')`,
-          opacity: 0.95
-        }}
-      />
+      {/* 1. YENİ: KENDİ YÜKLEDİĞİN LOKAL ARKA PLAN FOTOĞRAFI */}
+      <div className="absolute inset-0 w-full h-full">
+        <img 
+          src="/countdown.JPG" 
+          alt="Countdown Background" 
+          className="w-full h-full object-cover"
+        />
+        {/* Yazıların okunabilmesi için üzerine o lacivert tonunda zarif bir filtre eklendi */}
+        <div className="absolute inset-0 bg-[#1A3354]/60" />
+      </div>
 
-      {/* 2. İÇ GÖLGE (Preslenmiş ağır kağıt hissi) */}
+      {/* 2. İÇ GÖLGE (Preslenmiş çerçeve hissi) */}
       <div className="absolute inset-0 shadow-[inset_0_0_50px_rgba(0,0,0,0.4)] pointer-events-none" />
 
       {/* 3. MERKEZİ PARILTI */}
