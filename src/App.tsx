@@ -12,16 +12,16 @@ import { RSVPForm } from './components/RSVPForm';
 import { Footer } from './components/Footer';
 import { AudioPlayer } from './components/AudioPlayer';
 
-// URL'den gelen slug'ı alıp içeriği gösteren ana taşıyıcı
 const InvitationWrapper = () => {
   const [contentVisible, setContentVisible] = useState(false);
-  const { _slug } = useParams<{ slug: string }>();
+  // Burada slug'ı gerçek ismiyle alıyoruz
+  const { slug } = useParams<{ slug: string }>();
 
   return (
     <>
       <AudioPlayer />
-      {/* Envelope'a slug bilgisini gönderiyoruz */}
-      <Envelope onOpen={() => setContentVisible(true)} />
+      {/* Burada slug'ı Envelope bileşenine gönderiyoruz */}
+      <Envelope onOpen={() => setContentVisible(true)} slug={slug} />
       
       {contentVisible && (
         <motion.main
