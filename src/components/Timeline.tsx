@@ -2,17 +2,35 @@ import React from 'react';
 import { Section } from './Section';
 import { Utensils, GlassWater, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 export const Timeline: React.FC = () => {
+  const location = useLocation();
+  const isEnglish = location.pathname.includes('/en');
+
   const events = [
-    { time: '18:30', title: 'Karşılama / Kokteyl', icon: GlassWater },
-    { time: '19:00', title: 'Nikah Seremonisi', icon: Heart },
-    { time: '20:00', title: 'Yemek', icon: Utensils },
+    { 
+      time: '18:30', 
+      title: isEnglish ? 'Welcome / Cocktail' : 'Karşılama / Kokteyl', 
+      icon: GlassWater 
+    },
+    { 
+      time: '19:00', 
+      title: isEnglish ? 'Wedding Ceremony' : 'Nikah Seremonisi', 
+      icon: Heart 
+    },
+    { 
+      time: '20:00', 
+      title: isEnglish ? 'Dinner' : 'Yemek', 
+      icon: Utensils 
+    },
   ];
 
   return (
     <Section id="timeline" className="text-center max-w-4xl mx-auto py-12">
-      <h2 className="font-script text-4xl md:text-5xl text-text mb-2">Düğün Akışı</h2>
+      <h2 className="font-script text-4xl md:text-5xl text-text mb-2">
+        {isEnglish ? 'Wedding Timeline' : 'Düğün Akışı'}
+      </h2>
       
       <div className="relative mt-12 px-4">
         {/* Yatay Çizgi (Masaüstü Ekranlar İçin) */}
