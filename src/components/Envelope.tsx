@@ -12,17 +12,23 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug }) => {
   const [isFlapOpen, setIsFlapOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [guestName, setGuestName] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    // Eğer URL'de bir isim varsa (örn: /davetli/nuranasar) çalışır
     if (slug) {
+      setIsLoading(true);
       fetch(`${GUEST_API_URL}?slug=${slug}`)
         .then(res => res.json())
         .then(data => {
           if (data.status === 'success') {
             setGuestName(data.isim);
+          } else {
+            console.log("Excel'de bu isim bulunamadı!");
           }
         })
-        .catch(err => console.error("İsim çekilemedi:", err));
+        .catch(err => console.error("Bağlantı hatası:", err))
+        .finally(() => setIsLoading(false));
     }
   }, [slug]);
 
@@ -45,8 +51,16 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug }) => {
           className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 select-none bg-no-repeat bg-center bg-cover"
           style={{ backgroundImage: 'url(/floral_bg.png)' }}
         >
-          {/* YENİ BAŞLIK: Zarftan bağımsız, ekranın üstünde zarif bir headline */}
-          {guestName && (
+          
+          {/* YÜKLENİYOR DURUMU: Excelden veri aranırken bu çıkar */}
+          {slug && isLoading && !guestName && (
+            <div className="absolute top-16 md:top-24 inset-x-0 z-[60] flex flex-col items-center text-center px-4 pointer-events-none">
+              <p className="font-serif text-[#1E3B2B] text-lg bg-white/40 px-4 py-1 rounded">Davetiye hazırlanıyor...</p>
+            </div>
+          )}
+
+          {/* İSİM BULUNDU DURUMU: Excelden isim gelirse bu çıkar */}
+          {guestName && !isLoading && (
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
