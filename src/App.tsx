@@ -29,7 +29,8 @@ const InvitationWrapper = () => {
           <Timeline />
           <DressCode />
           <Gifts />
-          <RSVPForm ""} slug="{slug" ||/>
+          {/* Hatalı olan RSVPForm satırı tamamen düzeltildi */}
+          <RSVPForm slug={slug || ""} />
           <Footer />
         </motion.main>
       )}
