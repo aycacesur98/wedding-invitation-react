@@ -6,12 +6,16 @@ const GUEST_API_URL = 'https://script.google.com/macros/s/AKfycbwRHNQ9rH-Aa48lp-
 interface EnvelopeProps {
   onOpen: () => void;
   slug?: string;
+  lang?: 'tr' | 'en'; // Dil seçeneğini ekledik
 }
 
-export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug }) => {
+export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug, lang = 'tr' }) => {
   const [isFlapOpen, setIsFlapOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [guestName, setGuestName] = useState<string>('');
+  
+  // Dil ingilizce mi diye kontrol eden küçük bir sabit
+  const isEnglish = lang === 'en';
 
   useEffect(() => {
     if (slug) {
@@ -54,8 +58,8 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug }) => {
               className="absolute top-16 md:top-24 inset-x-0 z-[60] flex flex-col items-center text-center px-4 pointer-events-none"
             >
               <h2 className="font-serif text-[#1E3B2B] text-xl md:text-2xl tracking-wide leading-relaxed drop-shadow-[0_2px_10px_rgba(255,255,255,0.9)]">
-                Sevgili <span className="font-bold">{guestName}</span>,<br/>
-                düğünümüze davetlisiniz
+                {isEnglish ? "Dear" : "Sevgili"} <span className="font-bold">{guestName}</span>,<br/>
+                {isEnglish ? "you are invited to our wedding" : "düğünümüze davetlisiniz"}
               </h2>
             </motion.div>
           )}
@@ -69,7 +73,9 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug }) => {
               <motion.div initial={{ y: 0, scale: 1, zIndex: 2 }} animate={isFlapOpen ? { y: -140, scale: 1.03, zIndex: 2 } : { y: 0, scale: 1, zIndex: 2 }} transition={{ delay: 0.25, duration: 1.6, ease: "easeOut" }} className="absolute inset-x-4 top-3 bottom-3 bg-white shadow-lg p-5 flex flex-col items-center justify-center text-center rounded-md border border-neutral-100">
                 <div className="relative z-10 flex flex-col items-center justify-center">
                   <h1 className="mb-1 tracking-wide font-normal" style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '1.85rem', color: '#1E3B2B' }}>Ayça & Çağkan</h1>
-                  <p className="my-1 tracking-[0.2em] text-xs uppercase" style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', color: '#b45309' }}>Düğün Davetiyesi</p>
+                  <p className="my-1 tracking-[0.2em] text-xs uppercase" style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', color: '#b45309' }}>
+                    {isEnglish ? "Wedding Invitation" : "Düğün Davetiyesi"}
+                  </p>
                 </div>
               </motion.div>
 
@@ -93,7 +99,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug }) => {
             </motion.div>
 
             <motion.p animate={isFlapOpen ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="absolute bottom-[-60px] font-serif text-sm text-neutral-600 tracking-wider text-center bg-white/60 px-4 py-1.5 rounded-full backdrop-blur-sm shadow-sm">
-              Açmak için lütfen zarfa tıklayınız
+              {isEnglish ? "Please tap the envelope to open" : "Açmak için lütfen zarfa tıklayınız"}
             </motion.p>
           </div>
         </motion.div>
