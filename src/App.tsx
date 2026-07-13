@@ -14,14 +14,13 @@ import { AudioPlayer } from './components/AudioPlayer';
 
 const InvitationWrapper = () => {
   const [contentVisible, setContentVisible] = useState(false);
-  // Burada slug'ı gerçek ismiyle alıyoruz
   const { slug } = useParams<{ slug: string }>();
 
   return (
     <>
       <AudioPlayer />
-      {/* Burada slug'ı Envelope bileşenine gönderiyoruz */}
-      <Envelope onOpen={() => setContentVisible(true)} slug={slug} />
+      {/* slug'ı burada Envelope'a gönderiyoruz, slug undefined bile olsa boş string gider ve hata vermez */}
+      <Envelope onOpen={() => setContentVisible(true)} slug={slug || ""} />
       
       {contentVisible && (
         <motion.main
