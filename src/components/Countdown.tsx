@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCountdown } from '../hooks/useCountdown';
 import { Section } from './Section';
+import { useLocation } from 'react-router-dom';
 
 const TimeUnit = ({ value, label }: { value: number; label: string }) => (
   <div className="flex flex-col items-center justify-center p-4 border border-white/30 rounded-xl md:aspect-square bg-white/10 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_4px_10px_rgba(0,0,0,0.1)]">
@@ -14,6 +15,9 @@ const TimeUnit = ({ value, label }: { value: number; label: string }) => (
 );
 
 export const Countdown: React.FC = () => {
+  const location = useLocation();
+  const isEnglish = location.pathname.includes('/en');
+
   // Hedef Tarih: 22 Ağustos 2026
   const targetDate = new Date('2026-08-22T18:30:00');
   const { days, hours, minutes } = useCountdown(targetDate);
@@ -38,16 +42,16 @@ export const Countdown: React.FC = () => {
 
       <div className="mx-4 md:mx-0 relative z-10">
         <h2 className="font-script text-5xl md:text-6xl text-[#F9F9F6] mb-4 tracking-wide drop-shadow-md">
-          Geri Sayım!
+          {isEnglish ? "Countdown!" : "Geri Sayım!"}
         </h2>
         <p className="font-serif text-[#F9F9F6]/90 text-lg md:text-xl mb-12 drop-shadow-sm tracking-wide">
-          Sizi aramızda görmekten mutluluk duyarız
+          {isEnglish ? "We look forward to celebrating with you" : "Sizi aramızda görmekten mutluluk duyarız"}
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-2xl mx-auto px-4">
-          <TimeUnit value={days} label="GÜN" />
-          <TimeUnit value={hours} label="SAAT" />
-          <TimeUnit value={minutes} label="DAKİKA" />
+          <TimeUnit value={days} label={isEnglish ? "DAYS" : "GÜN"} />
+          <TimeUnit value={hours} label={isEnglish ? "HOURS" : "SAAT"} />
+          <TimeUnit value={minutes} label={isEnglish ? "MINUTES" : "DAKİKA"} />
         </div>
       </div>
     </Section>
