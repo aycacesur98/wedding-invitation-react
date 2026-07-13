@@ -4,7 +4,7 @@ import { Section } from './Section';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Google Spreadsheet Web App URL'niz - KESİNLİKLE DOKUNULMADI
+// Google Spreadsheet Web App URL'niz
 const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyodfi6tYdNPlAj6cwByJXWPDmdJ0wPZgR0-P5ZzQ7YTVDneCVxN5c9SAkYW2TxJZcOGA/exec';
 
 export const RSVPForm: React.FC = () => {
@@ -42,7 +42,6 @@ export const RSVPForm: React.FC = () => {
     }
   };
 
-  // SADELEŞTİRİLMİŞ, TERTEMİZ BAŞARI EKRANI (Excel yazısı ve tekrar doldurma butonu yok)
   if (submitStatus === 'success') {
     return (
       <Section id="rsvp" className="text-center py-24">
@@ -135,7 +134,7 @@ export const RSVPForm: React.FC = () => {
           {errors.asistira && <span className="text-red-500 text-xs font-sans">{(errors.asistira as any).message}</span>}
         </div>
 
-        {/* Şartlı Alanlar: Eğer "Evet" veya "Bilmiyorum" denirse +1 sorusu çıksın */}
+        {/* Şartlı Alanlar */}
         {(asistiraValue === 'Evet, katılıyorum' || asistiraValue === 'Henüz bilmiyorum') && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
