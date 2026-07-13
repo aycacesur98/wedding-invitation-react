@@ -1,35 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Section } from './Section';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Google Spreadsheet Web App URL'niz
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx-F1PKODUFCkf3MXPv_uvSeOgp1BCe38m1tXzhp-Sg38WjsH9UhZqrkczaBoXES-tPaQ/exec';
+// Katılımcı bilgisini çektiğimiz ve yanıtı yolladığımız Google linkleri
+const RSVP_SUBMIT_URL = 'https://script.google.com/macros/s/AKfycbx-F1PKODUFCkf3MXPv_uvSeOgp1BCe38m1tXzhp-Sg38WjsH9UhZqrkczaBoXES-tPaQ/exec';
+const GUEST_API_URL = 'https://script.google.com/macros/s/AKfycbwRHNQ9rH-Aa48lp-jBMbejWDzhpxzb00pD1fZPoRwmHx6Bh22l62N541j5_jk49zeY6g/exec';
 
-export const RSVPForm: React.FC = () => {
+interface RSVPFormProps {
+  slug?: string;
+}
+
+export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  
+  // Kontenjan durumu: Varsayılan null. Eğer API'den gelirse güncellenir.
+  const [guestQuota, setGuestQuota] = useState<number | null>(null);
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<any>();
+  const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm<any>();
   
   const asistiraValue = watch('asistira');
   const hasPlusOne = watch('has_plus_one');
+
+  // Sayfa yüklendiğinde, eğer URL'de slug varsa Google Sheets'ten kontenjanını (C sütunu) öğren
+  useEffect(() => {
+    if (slug) {
+      fetch(`${GUEST_API_URL}?slug=${slug}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            // İsim bulunduğunda formun isim alanını otomatik doldur
+            setValue('nombre_completo', data.isim);
+            
+            // Eğer Excel'den kontenjan (C sütunu) geliyorsa al, gelmiyorsa varsayılan 1 yap
+            const parsedQuota = parseInt(data.kontenjan, 10);
+            setGuestQuota(!isNaN(parsedQuota) ? parsedQuota : 1);
+          }
+        })
+        .catch(err => console.error("Kontenjan çekilemedi:", err));
+    }
+  }, [slug, setValue]);
 
   const onSubmit = async (data: any) => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setErrorMessage('');
 
+    // Eğer kontenjan 1 ise (misafir hakkı yoksa), arka planda gizlice misafir bilgilerini boş gönderelim ki eski Excel çökmesin
+    const finalData = {
+      ...data,
+      has_plus_one: (guestQuota === 1) ? 'no' : data.has_plus_one,
+      plus_one_name: (guestQuota === 1) ? '' : data.plus_one_name,
+    };
+
     try {
-      await fetch(GOOGLE_SHEET_URL, {
+      await fetch(RSVP_SUBMIT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(finalData),
       });
 
       setSubmitStatus('success');
@@ -80,7 +114,7 @@ export const RSVPForm: React.FC = () => {
           {errors.nombre_completo && <span className="text-red-500 text-xs font-sans">{(errors.nombre_completo as any).message}</span>}
         </div>
 
-        {/* Cep Telefonu Alanı */}
+        {/* Cep Telefonu */}
         <div className="space-y-1">
           <label className="block font-serif text-lg text-text">Cep Telefonu *</label>
           <input
@@ -104,79 +138,73 @@ export const RSVPForm: React.FC = () => {
           <label className="block font-serif text-lg text-text">Düğünümüze katılabilecek misiniz? *</label>
           <div className="space-y-2">
             <label className="flex items-center space-x-3 cursor-pointer p-3 border border-transparent hover:bg-secondary/30 rounded transition-colors">
-              <input
-                {...register('asistira', { required: 'Lütfen bir seçenek belirleyin' })}
-                type="radio"
-                value="Evet, katılıyorum"
-                className="text-primary focus:ring-primary h-4 w-4"
-              />
+              <input {...register('asistira', { required: 'Lütfen bir seçenek belirleyin' })} type="radio" value="Evet, katılıyorum" className="text-primary focus:ring-primary h-4 w-4" />
               <span className="font-sans text-text">Evet, katılıyorum</span>
             </label>
             <label className="flex items-center space-x-3 cursor-pointer p-3 border border-transparent hover:bg-secondary/30 rounded transition-colors">
-              <input
-                {...register('asistira', { required: 'Lütfen bir seçenek belirleyin' })}
-                type="radio"
-                value="Hayır, katılamıyorum"
-                className="text-primary focus:ring-primary h-4 w-4"
-              />
+              <input {...register('asistira', { required: 'Lütfen bir seçenek belirleyin' })} type="radio" value="Hayır, katılamıyorum" className="text-primary focus:ring-primary h-4 w-4" />
               <span className="font-sans text-text">Hayır, katılamıyorum</span>
             </label>
             <label className="flex items-center space-x-3 cursor-pointer p-3 border border-transparent hover:bg-secondary/30 rounded transition-colors">
-              <input
-                {...register('asistira', { required: 'Lütfen bir seçenek belirleyin' })}
-                type="radio"
-                value="Henüz bilmiyorum"
-                className="text-primary focus:ring-primary h-4 w-4"
-              />
+              <input {...register('asistira', { required: 'Lütfen bir seçenek belirleyin' })} type="radio" value="Henüz bilmiyorum" className="text-primary focus:ring-primary h-4 w-4" />
               <span className="font-sans text-text">Henüz bilmiyorum</span>
             </label>
           </div>
           {errors.asistira && <span className="text-red-500 text-xs font-sans">{(errors.asistira as any).message}</span>}
         </div>
 
-        {/* Şartlı Alanlar */}
+        {/* Şartlı Alanlar (+1 Mantığı) */}
         {(asistiraValue === 'Evet, katılıyorum' || asistiraValue === 'Henüz bilmiyorum') && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             className="space-y-6 pt-4 border-t border-primary/10"
           >
-            {/* +1 Kişi Var mı Seçeneği */}
-            <div className="space-y-2">
-              <label className="block font-serif text-lg text-text">Yanınızda artı bir misafirimiz olacak mı?</label>
-              <div className="flex space-x-6 p-2">
-                <label className="flex items-center space-x-2 cursor-pointer">
-                  <input {...register('has_plus_one')} type="radio" value="yes" className="text-primary focus:ring-primary" />
-                  <span className="font-sans text-text">Evet</span>
-                </label>
-                <label className="flex items-center space-x-2 cursor-pointer">
-                  <input {...register('has_plus_one')} type="radio" value="no" className="text-primary focus:ring-primary" />
-                  <span className="font-sans text-text">Hayır</span>
-                </label>
-              </div>
-            </div>
+            {/* Eğer kişi slug ile gelmediyse VEYA kontenjanı 2 ve üzeri ise bu +1 sorusunu göster */}
+            {(guestQuota === null || guestQuota >= 2) && (
+              <div className="space-y-2">
+                <label className="block font-serif text-lg text-text">Yanınızda artı bir misafirimiz olacak mı?</label>
+                <div className="flex space-x-6 p-2">
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input {...register('has_plus_one')} type="radio" value="yes" className="text-primary focus:ring-primary" />
+                    <span className="font-sans text-text">Evet</span>
+                  </label>
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input {...register('has_plus_one')} type="radio" value="no" className="text-primary focus:ring-primary" />
+                    <span className="font-sans text-text">Hayır</span>
+                  </label>
+                </div>
 
-            {/* Eğer +1 seçeneğine "Evet" derlerse çıkacak Ekstra Ad Soyad alanı */}
-            {hasPlusOne === 'yes' && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                className="space-y-1 bg-secondary/10 p-4 rounded border border-primary/5"
-              >
-                <label className="block font-serif text-base text-text">Gelecek Diğer Kişinin Adı Soyadı *</label>
-                <input
-                  {...register('plus_one_name', { required: 'Lütfen eşinizin/misafirinizin adını belirtiniz' })}
-                  type="text"
-                  className="w-full px-4 py-2 border border-primary/20 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-white"
-                  placeholder="Refakatçinizin adı ve soyadı"
-                />
-                {errors.plus_one_name && <span className="text-red-500 text-xs font-sans">{(errors.plus_one_name as any).message}</span>}
-              </motion.div>
+                {hasPlusOne === 'yes' && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    className="space-y-1 bg-secondary/10 p-4 rounded border border-primary/5 mt-4"
+                  >
+                    <label className="block font-serif text-base text-text">Gelecek Diğer Kişinin Adı Soyadı *</label>
+                    <input
+                      {...register('plus_one_name', { required: 'Lütfen eşinizin/misafirinizin adını belirtiniz' })}
+                      type="text"
+                      className="w-full px-4 py-2 border border-primary/20 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-white"
+                      placeholder="Refakatçinizin adı ve soyadı"
+                    />
+                    {errors.plus_one_name && <span className="text-red-500 text-xs font-sans">{(errors.plus_one_name as any).message}</span>}
+                  </motion.div>
+                )}
+              </div>
             )}
+            
+            {/* Eğer kişinin kontenjanı kesin 1 ise ve bu durumu ona da söylemek istersen (isteğe bağlı) */}
+            {guestQuota === 1 && (
+              <div className="text-sm text-text/60 italic px-2">
+                * Bu davetiye tek kişiliktir.
+              </div>
+            )}
+
           </motion.div>
         )}
 
-        {/* Dilek ve Not Kutusu */}
+        {/* Dilek ve Not */}
         <div className="space-y-1">
           <label className="block font-serif text-lg text-text">Bize dileklerinizi yazın</label>
           <textarea
@@ -200,10 +228,7 @@ export const RSVPForm: React.FC = () => {
           className="w-full py-3 bg-primary text-white font-sans font-medium uppercase tracking-wider rounded shadow-md hover:bg-primary/90 transition-all disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-2"
         >
           {isSubmitting ? (
-            <>
-              <Loader2 className="animate-spin" />
-              Gönderiliyor...
-            </>
+            <><Loader2 className="animate-spin" /> Gönderiliyor...</>
           ) : (
             '✉️ Yanıtı Gönder'
           )}
