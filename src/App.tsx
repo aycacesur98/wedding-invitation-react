@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
 import { Envelope } from './components/Envelope';
 import { Hero } from './components/Hero';
 import { Countdown } from './components/Countdown';
@@ -11,11 +12,12 @@ import { RSVPForm } from './components/RSVPForm';
 import { Footer } from './components/Footer';
 import { AudioPlayer } from './components/AudioPlayer';
 
-function App() {
+// URL'den gelen slug'ı alıp içeriği gösteren ana taşıyıcı
+const InvitationWrapper = () => {
   const [contentVisible, setContentVisible] = useState(false);
 
   return (
-    <div className="min-h-screen bg-secondary overflow-x-hidden">
+    <>
       <AudioPlayer />
       <Envelope onOpen={() => setContentVisible(true)} />
       
@@ -35,6 +37,20 @@ function App() {
           <Footer />
         </motion.main>
       )}
+    </>
+  );
+};
+
+function App() {
+  return (
+    <div className="min-h-screen bg-secondary overflow-x-hidden">
+      <BrowserRouter>
+        <Routes>
+          {/* Hem ana sayfa hem de /davetli/:slug rotaları aynı bileşeni kullanır */}
+          <Route path="/" element={<InvitationWrapper />} />
+          <Route path="/davetli/:slug" element={<InvitationWrapper />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
