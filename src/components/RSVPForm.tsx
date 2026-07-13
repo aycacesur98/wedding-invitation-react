@@ -4,7 +4,6 @@ import { Section } from './Section';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Katılımcı bilgisini çektiğimiz ve yanıtı yolladığımız Google linkleri
 const RSVP_SUBMIT_URL = 'https://script.google.com/macros/s/AKfycbx-F1PKODUFCkf3MXPv_uvSeOgp1BCe38m1tXzhp-Sg38WjsH9UhZqrkczaBoXES-tPaQ/exec';
 const GUEST_API_URL = 'https://script.google.com/macros/s/AKfycbwRHNQ9rH-Aa48lp-jBMbejWDzhpxzb00pD1fZPoRwmHx6Bh22l62N541j5_jk49zeY6g/exec';
 
@@ -17,7 +16,6 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   
-  // Kontenjan durumu: Varsayılan null. Eğer API'den gelirse güncellenir.
   const [guestQuota, setGuestQuota] = useState<number | null>(null);
 
   const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm<any>();
@@ -25,17 +23,13 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
   const asistiraValue = watch('asistira');
   const hasPlusOne = watch('has_plus_one');
 
-  // Sayfa yüklendiğinde, eğer URL'de slug varsa Google Sheets'ten kontenjanını (C sütunu) öğren
   useEffect(() => {
     if (slug) {
       fetch(`${GUEST_API_URL}?slug=${slug}`)
         .then(res => res.json())
         .then(data => {
           if (data.status === 'success') {
-            // İsim bulunduğunda formun isim alanını otomatik doldur
             setValue('nombre_completo', data.isim);
-            
-            // Eğer Excel'den kontenjan (C sütunu) geliyorsa al, gelmiyorsa varsayılan 1 yap
             const parsedQuota = parseInt(data.kontenjan, 10);
             setGuestQuota(!isNaN(parsedQuota) ? parsedQuota : 1);
           }
@@ -49,7 +43,6 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
     setSubmitStatus('idle');
     setErrorMessage('');
 
-    // Eğer kontenjan 1 ise (misafir hakkı yoksa), arka planda gizlice misafir bilgilerini boş gönderelim ki eski Excel çökmesin
     const finalData = {
       ...data,
       has_plus_one: (guestQuota === 1) ? 'no' : data.has_plus_one,
@@ -60,15 +53,11 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
       await fetch(RSVP_SUBMIT_URL, {
         method: 'POST',
         mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(finalData),
       });
-
       setSubmitStatus('success');
     } catch (error) {
-      console.error('Error submitting RSVP:', error);
       setSubmitStatus('error');
       setErrorMessage('Bir hata oluştu. Lütfen tekrar deneyiniz.');
     } finally {
@@ -91,6 +80,9 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
     );
   }
 
+  // Kişinin kendi haricinde getirebileceği maksimum misafir sayısı
+  const extraGuestsAllowed = guestQuota ? guestQuota - 1 : 1;
+
   return (
     <Section id="rsvp" className="max-w-2xl" withPattern>
       <div className="text-center mb-10">
@@ -102,7 +94,6 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white p-6 md:p-10 rounded-lg shadow-lg border border-primary/10">
         
-        {/* Ad Soyad */}
         <div className="space-y-1">
           <label className="block font-serif text-lg text-text">Ad Soyad *</label>
           <input
@@ -114,7 +105,6 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
           {errors.nombre_completo && <span className="text-red-500 text-xs font-sans">{(errors.nombre_completo as any).message}</span>}
         </div>
 
-        {/* Cep Telefonu */}
         <div className="space-y-1">
           <label className="block font-serif text-lg text-text">Cep Telefonu *</label>
           <input
@@ -133,7 +123,6 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
           {errors.telefon && <span className="text-red-500 text-xs font-sans">{(errors.telefon as any).message}</span>}
         </div>
 
-        {/* Katılım Durumu */}
         <div className="space-y-2">
           <label className="block font-serif text-lg text-text">Düğünümüze katılabilecek misiniz? *</label>
           <div className="space-y-2">
@@ -153,17 +142,19 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
           {errors.asistira && <span className="text-red-500 text-xs font-sans">{(errors.asistira as any).message}</span>}
         </div>
 
-        {/* Şartlı Alanlar (+1 Mantığı) */}
         {(asistiraValue === 'Evet, katılıyorum' || asistiraValue === 'Henüz bilmiyorum') && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             className="space-y-6 pt-4 border-t border-primary/10"
           >
-            {/* Eğer kişi slug ile gelmediyse VEYA kontenjanı 2 ve üzeri ise bu +1 sorusunu göster */}
             {(guestQuota === null || guestQuota >= 2) && (
               <div className="space-y-2">
-                <label className="block font-serif text-lg text-text">Yanınızda artı bir misafirimiz olacak mı?</label>
+                <label className="block font-serif text-lg text-text">
+                  {guestQuota && guestQuota > 2 
+                    ? `Yanınızda misafirleriniz (en fazla ${extraGuestsAllowed} kişi) olacak mı?`
+                    : `Yanınızda artı bir misafirimiz olacak mı?`}
+                </label>
                 <div className="flex space-x-6 p-2">
                   <label className="flex items-center space-x-2 cursor-pointer">
                     <input {...register('has_plus_one')} type="radio" value="yes" className="text-primary focus:ring-primary" />
@@ -181,30 +172,40 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
                     animate={{ height: "auto", opacity: 1 }}
                     className="space-y-1 bg-secondary/10 p-4 rounded border border-primary/5 mt-4"
                   >
-                    <label className="block font-serif text-base text-text">Gelecek Diğer Kişinin Adı Soyadı *</label>
-                    <input
-                      {...register('plus_one_name', { required: 'Lütfen eşinizin/misafirinizin adını belirtiniz' })}
-                      type="text"
-                      className="w-full px-4 py-2 border border-primary/20 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-white"
-                      placeholder="Refakatçinizin adı ve soyadı"
-                    />
+                    <label className="block font-serif text-base text-text">
+                      {guestQuota && guestQuota > 2 
+                        ? `Gelecek Diğer Kişilerin Adı Soyadı (Maksimum ${extraGuestsAllowed} kişi) *` 
+                        : `Gelecek Diğer Kişinin Adı Soyadı *`}
+                    </label>
+                    {guestQuota && guestQuota > 2 ? (
+                      <textarea
+                        {...register('plus_one_name', { required: 'Lütfen misafirlerinizin adını belirtiniz' })}
+                        rows={2}
+                        className="w-full px-4 py-2 border border-primary/20 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-white"
+                        placeholder="Örn: Ali Yılmaz, Ayşe Yılmaz"
+                      />
+                    ) : (
+                      <input
+                        {...register('plus_one_name', { required: 'Lütfen eşinizin/misafirinizin adını belirtiniz' })}
+                        type="text"
+                        className="w-full px-4 py-2 border border-primary/20 rounded focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-white"
+                        placeholder="Refakatçinizin adı ve soyadı"
+                      />
+                    )}
                     {errors.plus_one_name && <span className="text-red-500 text-xs font-sans">{(errors.plus_one_name as any).message}</span>}
                   </motion.div>
                 )}
               </div>
             )}
             
-            {/* Eğer kişinin kontenjanı kesin 1 ise ve bu durumu ona da söylemek istersen (isteğe bağlı) */}
             {guestQuota === 1 && (
               <div className="text-sm text-text/60 italic px-2">
                 * Bu davetiye tek kişiliktir.
               </div>
             )}
-
           </motion.div>
         )}
 
-        {/* Dilek ve Not */}
         <div className="space-y-1">
           <label className="block font-serif text-lg text-text">Bize dileklerinizi yazın</label>
           <textarea
