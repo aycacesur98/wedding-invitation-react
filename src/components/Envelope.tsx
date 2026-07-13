@@ -6,19 +6,17 @@ const GUEST_API_URL = 'https://script.google.com/macros/s/AKfycbwRHNQ9rH-Aa48lp-
 
 interface EnvelopeProps {
   onOpen: () => void;
-  slug?: string; // Hata veren yer burasıydı, ekledik
+  slug?: string;
 }
 
 export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug }) => {
-  const { slug: urlSlug } = useParams<{ slug: string }>();
-  const activeSlug = slug || urlSlug;
   const [isFlapOpen, setIsFlapOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [guestName, setGuestName] = useState<string>('');
 
   useEffect(() => {
-    if (activeSlug) {
-      fetch(`${GUEST_API_URL}?slug=${activeSlug}`)
+    if (slug) {
+      fetch(`${GUEST_API_URL}?slug=${slug}`)
         .then(res => res.json())
         .then(data => {
           if (data.status === 'success') {
@@ -27,7 +25,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug }) => {
         })
         .catch(err => console.error("İsim çekilemedi:", err));
     }
-  }, [activeSlug]);
+  }, [slug]);
 
   const handleOpenEnvelope = () => {
     if (isFlapOpen) return;
@@ -39,6 +37,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug }) => {
   return (
     <AnimatePresence>
       <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet" />
+
       {isVisible && (
         <motion.div
           initial={{ opacity: 1 }}
@@ -47,24 +46,36 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug }) => {
           className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 select-none bg-no-repeat bg-center bg-cover"
           style={{ backgroundImage: 'url(/floral_bg.png)' }}
         >
+          {/* YENİ BAŞLIK: Zarftan bağımsız, ekranın üstünde zarif bir headline */}
           {guestName && (
-            <div className="absolute top-10 text-center px-4">
-               <h2 className="font-serif text-[#1E3B2B] text-xl tracking-wide bg-white/40 backdrop-blur-sm p-3 rounded-lg">
-                 Sevgili {guestName}, <br/> düğünümüze davetlisiniz!
-               </h2>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="absolute top-16 md:top-24 inset-x-0 z-[60] flex flex-col items-center text-center px-4 pointer-events-none"
+            >
+              <h2 className="font-serif text-[#1E3B2B] text-2xl md:text-3xl tracking-widest drop-shadow-[0_2px_10px_rgba(255,255,255,0.9)]">
+                Sevgili <span className="font-bold italic">{guestName}</span>,
+              </h2>
+              <p className="font-serif text-[#1E3B2B] text-lg md:text-xl mt-2 tracking-widest drop-shadow-[0_2px_10px_rgba(255,255,255,0.9)]">
+                Düğünümüze davetlisiniz
+              </p>
+            </motion.div>
           )}
-          <div className="relative w-full max-w-md h-64 mx-4 perspective-2000 flex flex-col items-center">
+
+          <div className="relative w-full max-w-md h-64 mx-4 perspective-2000 flex flex-col items-center mt-12">
             <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.8 }} className="relative w-full h-full shadow-[0_20px_50px_rgba(0,0,0,0.18)] rounded-lg">
               <div className="absolute inset-0 rounded-lg overflow-hidden bg-[#D4E2EC]" style={{ backgroundImage: 'url(/creamy_paper.png)', backgroundSize: 'cover', backgroundBlendMode: 'multiply' }}>
                 <div className="absolute inset-0 bg-black/[0.02] shadow-inner" />
               </div>
+
               <motion.div initial={{ y: 0, scale: 1, zIndex: 2 }} animate={isFlapOpen ? { y: -140, scale: 1.03, zIndex: 2 } : { y: 0, scale: 1, zIndex: 2 }} transition={{ delay: 0.25, duration: 1.6, ease: "easeOut" }} className="absolute inset-x-4 top-3 bottom-3 bg-white shadow-lg p-5 flex flex-col items-center justify-center text-center rounded-md border border-neutral-100">
                 <div className="relative z-10 flex flex-col items-center justify-center">
                   <h1 className="mb-1 tracking-wide font-normal" style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '1.85rem', color: '#1E3B2B' }}>Ayça & Çağkan</h1>
                   <p className="my-1 tracking-[0.2em] text-xs uppercase" style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', color: '#b45309' }}>Düğün Davetiyesi</p>
                 </div>
               </motion.div>
+
               <div className="absolute inset-0 z-10 pointer-events-none">
                 <svg className="absolute inset-0 w-full h-full drop-shadow-[0_-2px_4px_rgba(0,0,0,0.06)]" viewBox="0 0 100 100" preserveAspectRatio="none">
                   <path d="M0,-1 L52,50 L0,101 Z" fill="#CBDCE7" />
@@ -72,15 +83,18 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug }) => {
                   <path d="M-1,101 L50,45 L101,101 Z" fill="#C2D5E2" />
                 </svg>
               </div>
+
               <motion.div initial={{ rotateX: 0 }} animate={isFlapOpen ? { rotateX: 155 } : { rotateX: 0 }} transition={{ duration: 1.5, ease: "easeOut" }} style={{ transformOrigin: "top center", transformStyle: "preserve-3d", zIndex: isFlapOpen ? 1 : 30 }} className="absolute top-0 inset-x-0 h-[55%] cursor-pointer" onClick={handleOpenEnvelope}>
                 <svg className="w-full h-full drop-shadow-[0_4px_5px_rgba(0,0,0,0.08)]" viewBox="0 0 100 100" preserveAspectRatio="none">
                   <path d="M-1,-1 L101,-1 L50,102 Z" fill="#D4E2EC" />
                 </svg>
               </motion.div>
+
               <motion.div initial={{ rotateX: 0, opacity: 1 }} animate={isFlapOpen ? { rotateX: 155, y: -70, scale: 0.85, opacity: 0 } : { rotateX: 0, opacity: 1 }} transition={{ duration: 1.3, ease: "easeOut" }} style={{ transformOrigin: "top center", zIndex: 35 }} className="absolute top-0 left-1/2 -translate-x-1/2 mt-[75px] w-36 h-36 flex items-center justify-center cursor-pointer" onClick={handleOpenEnvelope}>
                 <img src="/yeni-muhur.png" alt="Düğün Mührü" className="w-full h-full object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.25)] active:scale-95 transition-transform duration-100" />
               </motion.div>
             </motion.div>
+
             <motion.p animate={isFlapOpen ? { opacity: 0, y: 15 } : { opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="absolute bottom-[-60px] font-serif text-sm text-neutral-600 tracking-wider text-center bg-white/60 px-4 py-1.5 rounded-full backdrop-blur-sm shadow-sm">
               Açmak için lütfen zarfa tıklayınız
             </motion.p>
