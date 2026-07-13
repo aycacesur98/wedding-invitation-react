@@ -19,7 +19,6 @@ const InvitationWrapper = () => {
   return (
     <>
       <AudioPlayer />
-      {/* slug'ı burada Envelope'a gönderiyoruz, slug undefined bile olsa boş string gider ve hata vermez */}
       <Envelope onOpen={() => setContentVisible(true)} slug={slug || ""} />
       
       {contentVisible && (
