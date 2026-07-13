@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useParams } from 'react-router-dom';
 
 const GUEST_API_URL = 'https://script.google.com/macros/s/AKfycbwRHNQ9rH-Aa48lp-jBMbejWDzhpxzb00pD1fZPoRwmHx6Bh22l62N541j5_jk49zeY6g/exec';
 
 interface EnvelopeProps {
   onOpen: () => void;
+  slug?: string; // Hata veren yer burasıydı, burayı ekledik.
 }
 
-export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
-  const { slug } = useParams<{ slug: string }>();
+export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug }) => {
   const [isFlapOpen, setIsFlapOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [guestName, setGuestName] = useState<string>('');
@@ -47,7 +46,6 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
           className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 select-none bg-no-repeat bg-center bg-cover"
           style={{ backgroundImage: 'url(/floral_bg.png)' }}
         >
-          {/* YENİ: Zarfın 3-4 cm üstündeki kişisel karşılama yazısı */}
           {guestName && (
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
@@ -62,13 +60,11 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
           )}
 
           <div className="relative w-full max-w-md h-64 mx-4 perspective-2000 flex flex-col items-center">
-            {/* Zarf içeriği aynen devam ediyor... */}
             <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.8 }} className="relative w-full h-full shadow-[0_20px_50px_rgba(0,0,0,0.18)] rounded-lg">
               <div className="absolute inset-0 rounded-lg overflow-hidden bg-[#D4E2EC]" style={{ backgroundImage: 'url(/creamy_paper.png)', backgroundSize: 'cover', backgroundBlendMode: 'multiply' }}>
                 <div className="absolute inset-0 bg-black/[0.02] shadow-inner" />
               </div>
 
-              {/* Mektup */}
               <motion.div initial={{ y: 0, scale: 1, zIndex: 2 }} animate={isFlapOpen ? { y: -140, scale: 1.03, zIndex: 2 } : { y: 0, scale: 1, zIndex: 2 }} transition={{ delay: 0.25, duration: 1.6, ease: "easeOut" }} className="absolute inset-x-4 top-3 bottom-3 bg-white shadow-lg p-5 flex flex-col items-center justify-center text-center rounded-md border border-neutral-100">
                 <div className="relative z-10 flex flex-col items-center justify-center">
                   <h1 className="mb-1 tracking-wide font-normal" style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '1.85rem', color: '#1E3B2B' }}>Ayça & Çağkan</h1>
@@ -76,7 +72,6 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen }) => {
                 </div>
               </motion.div>
 
-              {/* Üst Kapak ve Mühür */}
               <motion.div initial={{ rotateX: 0 }} animate={isFlapOpen ? { rotateX: 155 } : { rotateX: 0 }} transition={{ duration: 1.5, ease: "easeOut" }} style={{ transformOrigin: "top center", zIndex: isFlapOpen ? 1 : 30 }} className="absolute top-0 inset-x-0 h-[55%] cursor-pointer" onClick={handleOpenEnvelope}>
                 <svg className="w-full h-full drop-shadow-[0_4px_5px_rgba(0,0,0,0.08)]" viewBox="0 0 100 100" preserveAspectRatio="none">
                   <path d="M-1,-1 L101,-1 L50,102 Z" fill="#D4E2EC" />
