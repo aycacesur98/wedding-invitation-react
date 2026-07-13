@@ -22,11 +22,7 @@ const InvitationWrapper = () => {
       <Envelope onOpen={() => setContentVisible(true)} slug={slug || ""} />
       
       {contentVisible && (
-        <motion.main
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5 }}
-        >
+        <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.5 }}>
           <Hero />
           <Countdown />
           <Venue />
