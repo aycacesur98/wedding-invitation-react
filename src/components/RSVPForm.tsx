@@ -5,7 +5,7 @@ import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 // Google Spreadsheet Web App URL'niz
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyodfi6tYdNPlAj6cwByJXWPDmdJ0wPZgR0-P5ZzQ7YTVDneCVxN5c9SAkYW2TxJZcOGA/exec';
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx-F1PKODUFCkf3MXPv_uvSeOgp1BCe38m1tXzhp-Sg38WjsH9UhZqrkczaBoXES-tPaQ/exec';
 
 export const RSVPForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
