@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 export const Timeline: React.FC = () => {
   const events = [
     { time: '18:30', title: 'Karşılama / Kokteyl', icon: GlassWater },
-    { time: '19:30', title: 'Nikah Seremonisi', icon: Heart },
+    { time: '19:00', title: 'Nikah Seremonisi', icon: Heart },
     { time: '20:00', title: 'Yemek', icon: Utensils },
   ];
 
