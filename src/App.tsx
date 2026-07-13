@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Envelope } from './components/Envelope';
 import { Hero } from './components/Hero';
 import { Countdown } from './components/Countdown';
