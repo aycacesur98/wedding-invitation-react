@@ -29,7 +29,7 @@ const InvitationWrapper = () => {
           <Timeline />
           <DressCode />
           <Gifts />
-          <RSVPForm />
+          <RSVPForm ""} slug="{slug" ||/>
           <Footer />
         </motion.main>
       )}
