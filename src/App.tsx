@@ -15,7 +15,7 @@ import { AudioPlayer } from './components/AudioPlayer';
 // URL'den gelen slug'ı alıp içeriği gösteren ana taşıyıcı
 const InvitationWrapper = () => {
   const [contentVisible, setContentVisible] = useState(false);
-  const { slug } = useParams<{ slug: string }>();
+  const { _slug } = useParams<{ slug: string }>();
 
   return (
     <>
