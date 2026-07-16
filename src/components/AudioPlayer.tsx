@@ -6,28 +6,29 @@ export const AudioPlayer: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    const playAudio = async () => {
+    // Müziği başlatan fonksiyon
+    const startAudio = () => {
       if (audioRef.current) {
-        try {
-          audioRef.current.volume = 0.5;
-          await audioRef.current.play();
-        } catch (e) {
+        audioRef.current.volume = 0.5;
+        // Kullanıcı dokunduğu an müziği çal
+        audioRef.current.play().catch((e) => {
           console.log("Tarayıcı otomatik çalmayı engelledi:", e);
-        }
+        });
       }
+      // Müzik başladıktan sonra bu dinleyicileri kaldır (tek seferlik çalışsın)
+      document.removeEventListener('click', startAudio);
+      document.removeEventListener('touchstart', startAudio);
     };
 
-    // Zarfın açılmasını bekleyen sistem
-    const checkEnvelopeInterval = setInterval(() => {
-      const isEnvelopeStillHere = document.querySelector('.perspective-2000');
-      
-      if (!isEnvelopeStillHere) {
-        clearInterval(checkEnvelopeInterval); 
-        playAudio(); 
-      }
-    }, 500);
+    // Kullanıcı siteye girip zarfı açmak için ekrana DOKUNDUĞU AN müziği başlat
+    document.addEventListener('click', startAudio);
+    document.addEventListener('touchstart', startAudio, { passive: true });
 
-    return () => clearInterval(checkEnvelopeInterval);
+    // Temizlik
+    return () => {
+      document.removeEventListener('click', startAudio);
+      document.removeEventListener('touchstart', startAudio);
+    };
   }, []);
 
   const toggleMute = () => {
@@ -38,7 +39,6 @@ export const AudioPlayer: React.FC = () => {
   };
 
   return (
-    // Mobilde bottom-24 ile yukarı alındı, bilgisayarda md:bottom-6
     <div className="fixed bottom-24 right-4 md:bottom-6 md:right-6 z-50 flex bg-white/90 backdrop-blur-md p-1 rounded-full shadow-[0_4px_15px_rgba(0,0,0,0.1)] border border-[#1A3354]/10">
       <audio
         ref={audioRef}
