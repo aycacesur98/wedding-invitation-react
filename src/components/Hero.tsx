@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
@@ -7,7 +7,16 @@ export const Hero: React.FC = () => {
   const location = useLocation();
   const isEnglish = location.pathname.includes('/en');
   
-  // Kendi kendine kayma (autoScrollTimer) bilerek kaldırıldı. (UX açısından daha sağlıklı)
+  // 3.9 Saniye Sonra Sayfayı 80px Aşağı Kaydıran Efekt (Geri eklendi)
+  useEffect(() => {
+    const autoScrollTimer = setTimeout(() => {
+      if (window.scrollY === 0) {
+        window.scrollBy({ top: 80, behavior: 'smooth' });
+      }
+    }, 3900);
+
+    return () => clearTimeout(autoScrollTimer);
+  }, []);
 
   const scrollToRSVP = () => {
     const rsvpSection = document.getElementById('rsvp');
@@ -87,36 +96,36 @@ export const Hero: React.FC = () => {
           </motion.p>
         </motion.div>
 
-        {/* ALT KISIM: Buton ve Kaydırma İpucu Bir Arada Ama Ayrı */}
+        {/* ALT KISIM: Yazı üstte, buton altta. Mobilde kesilmemesi için bottom-10 kullanıldı */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 3.2 }}
-          className="absolute bottom-6 left-0 right-0 flex flex-col items-center z-30 gap-6"
+          className="absolute bottom-10 md:bottom-12 left-0 right-0 flex flex-col items-center z-30 gap-4"
         >
-          {/* Katılım Onay Butonu (Düğme şeklinde) */}
+          
+          {/* Kaydırma İpucu (Yazı ve Ok) - Kalın ve gölgeli yapıldı */}
+          <div className="flex flex-col items-center">
+            <span className="font-sans text-[11px] md:text-xs font-bold uppercase tracking-[0.2em] text-white drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)] mb-1 text-center">
+              {isEnglish ? 'Scroll for details' : 'Detaylar için kaydırınız'}
+            </span>
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+            >
+              <ChevronDown className="w-6 h-6 text-white drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]" strokeWidth={2.5} />
+            </motion.div>
+          </div>
+
+          {/* Katılım Onay Butonu */}
           <button
             onClick={scrollToRSVP}
-            className="px-6 py-3 bg-white/20 hover:bg-white/30 border border-white/60 backdrop-blur-md rounded-full transition-all duration-300 group cursor-pointer shadow-lg"
+            className="px-6 py-3 bg-white/25 hover:bg-white/35 border border-white/60 backdrop-blur-md rounded-full transition-all duration-300 group cursor-pointer shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
           >
-            <span className="font-sans tracking-[0.2em] text-[11px] md:text-sm font-semibold text-white drop-shadow-md">
+            <span className="font-sans tracking-[0.2em] text-[11px] md:text-sm font-bold text-white drop-shadow-md">
               {isEnglish ? "RSVP NOW" : "KATILIMINIZI ONAYLAYIN"}
             </span>
           </button>
-
-          {/* Sadece Kaydırma İpucu (Scroll Indicator) */}
-          <div className="flex flex-col items-center opacity-70">
-            <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-white mb-1 drop-shadow-md">
-              {isEnglish ? 'Scroll for details' : 'Detaylar için kaydırınız'}
-            </span>
-            {/* Animasyonlu Ok (Nefes alan) */}
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            >
-              <ChevronDown className="w-5 h-5 text-white drop-shadow-md" strokeWidth={2} />
-            </motion.div>
-          </div>
 
         </motion.div>
       </div>
