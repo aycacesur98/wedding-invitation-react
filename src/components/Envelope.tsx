@@ -14,7 +14,7 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug, lang = 'tr' })
   const [isVisible, setIsVisible] = useState(true);
   const [guestName, setGuestName] = useState<string>('');
   
-  // YENİ: Excel'den veri gelene kadar ekranı bekleten durum (State)
+  // Excel'den veri gelene kadar ekranı bekleten durum (State)
   const [isReady, setIsReady] = useState(!slug);
 
   const isEnglish = lang === 'en';
@@ -56,16 +56,16 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug, lang = 'tr' })
           style={{ backgroundImage: 'url(/floral_bg.png)' }}
         >
           
-          {/* YENİ: isReady true olana kadar zarfı ve metni saklıyoruz */}
+          {/* isReady true olana kadar zarfı ve metni saklıyoruz */}
           {isReady && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }} // Eskiden 0.8'di, 0.4'e düşürüldü, daha hızlı gelecek
+              transition={{ duration: 0.4 }} 
               className="w-full flex flex-col items-center justify-center"
             >
               
-              {/* İSİM KISMI: Yapraklara çarpmaması için top-16 yerine top-[130px] yapıldı */}
+              {/* İSİM KISMI */}
               {guestName && (
                 <div className="absolute top-[130px] md:top-28 inset-x-0 z-[60] flex flex-col items-center text-center px-4 pointer-events-none">
                   <h2 className="font-serif text-[#1E3B2B] text-xl md:text-2xl tracking-wide leading-relaxed drop-shadow-[0_2px_10px_rgba(255,255,255,0.9)]">
@@ -75,18 +75,23 @@ export const Envelope: React.FC<EnvelopeProps> = ({ onOpen, slug, lang = 'tr' })
                 </div>
               )}
 
-              {/* ZARF KISMI: Yazıya çarpmaması için mt-12 yerine mt-[120px] yapıldı */}
+              {/* ZARF KISMI */}
               <div className="relative w-full max-w-md h-64 mx-4 perspective-2000 flex flex-col items-center mt-[120px] md:mt-24">
                 <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.5 }} className="relative w-full h-full shadow-[0_20px_50px_rgba(0,0,0,0.18)] rounded-lg">
                   <div className="absolute inset-0 rounded-lg overflow-hidden bg-[#D4E2EC]" style={{ backgroundImage: 'url(/creamy_paper.png)', backgroundSize: 'cover', backgroundBlendMode: 'multiply' }}>
                     <div className="absolute inset-0 bg-black/[0.02] shadow-inner" />
                   </div>
 
+                  {/* İÇİNDEKİ KART (TARİH BURAYA EKLENDİ) */}
                   <motion.div initial={{ y: 0, scale: 1, zIndex: 2 }} animate={isFlapOpen ? { y: -140, scale: 1.03, zIndex: 2 } : { y: 0, scale: 1, zIndex: 2 }} transition={{ delay: 0.25, duration: 1.6, ease: "easeOut" }} className="absolute inset-x-4 top-3 bottom-3 bg-white shadow-lg p-5 flex flex-col items-center justify-center text-center rounded-md border border-neutral-100">
                     <div className="relative z-10 flex flex-col items-center justify-center">
                       <h1 className="mb-1 tracking-wide font-normal" style={{ fontFamily: "'Cinzel Decorative', serif", fontSize: '1.85rem', color: '#1E3B2B' }}>Ayça & Çağkan</h1>
                       <p className="my-1 tracking-[0.2em] text-xs uppercase" style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', color: '#b45309' }}>
                         {isEnglish ? "Wedding Invitation" : "Düğün Davetiyesi"}
+                      </p>
+                      {/* EKLENEN TARİH KISMI */}
+                      <p className="mt-1 tracking-widest text-[11px] font-sans text-[#1E3B2B]/70">
+                        22.08.2026
                       </p>
                     </div>
                   </motion.div>
