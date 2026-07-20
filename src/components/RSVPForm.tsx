@@ -18,7 +18,6 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [guestQuota, setGuestQuota] = useState<number | null>(null);
 
-  // Dil kontrolü
   const location = useLocation();
   const isEnglish = location.pathname.includes('/en');
 
@@ -47,7 +46,6 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
     setSubmitStatus('idle');
     setErrorMessage('');
 
-    // EKLENEN KISIM: source_link parametresi ile anlık URL'i alıyoruz
     const finalData = {
       ...data,
       has_plus_one: (guestQuota === 1) ? 'no' : data.has_plus_one,
@@ -202,6 +200,11 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
                       />
                     )}
                     {errors.plus_one_name && <span className="text-red-500 text-xs font-sans">{(errors.plus_one_name as any).message}</span>}
+                    
+                    {/* YENİ EKLENEN YAŞ SINIRI HATIRLATMASI */}
+                    <div className="text-[11px] md:text-xs text-text/70 italic mt-2.5 pt-1 border-t border-primary/10">
+                      * {isEnglish ? 'Kindly note: Our wedding is for guests aged 14 and older. Thank you for your understanding.' : 'Hatırlatma: Düğünümüz 14 yaş ve üzeri misafirlerimiz içindir. Anlayışınız için teşekkür ederiz.'}
+                    </div>
                   </motion.div>
                 )}
               </div>
