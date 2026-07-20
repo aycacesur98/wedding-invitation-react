@@ -47,10 +47,12 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ slug }) => {
     setSubmitStatus('idle');
     setErrorMessage('');
 
+    // EKLENEN KISIM: source_link parametresi ile anlık URL'i alıyoruz
     const finalData = {
       ...data,
       has_plus_one: (guestQuota === 1) ? 'no' : data.has_plus_one,
       plus_one_name: (guestQuota === 1) ? '' : data.plus_one_name,
+      source_link: window.location.href, 
     };
 
     try {
